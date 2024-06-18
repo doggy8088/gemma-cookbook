@@ -1,4 +1,4 @@
-﻿# Welcome to the Gemma Cookbook
+﻿# 歡迎來到 Gemma Cookbook
 
 這是一系列關於 [Google Gemma](https://ai.google.dev/gemma/) 的指南和範例。
 
@@ -7,9 +7,9 @@
 Gemma 是一系列輕量級、最先進的開放模型，基於用於建立 Gemini 模型的相同研究和技術建構。Gemma 模型系列包括：
 
 * [base Gemma](https://ai.google.dev/gemma/docs/model_card)
-* [程式碼 Gemma](https://ai.google.dev/gemma/docs/codegemma)
-* [Pali Gemma](https://ai.google.dev/gemma/docs/paligemma)
-* [Recurrent Gemma](https://ai.google.dev/gemma/docs/recurrentgemma)
+* [CodeGemma](https://ai.google.dev/gemma/docs/codegemma)
+* [PaliGemma](https://ai.google.dev/gemma/docs/paligemma)
+* [RecurrentGemma](https://ai.google.dev/gemma/docs/recurrentgemma)
 
 你可以在 GitHub、Hugging Face models、Kaggle、Google Cloud Vertex AI Model Garden 和 [ai.nvidia.com](ai.nvidia.com) 找到 Gemma 模型。
 
@@ -50,7 +50,7 @@ Gemma 是一系列輕量級、最先進的開放模型，基於用於建立 Gemi
 
 請在新的 [Build with Google AI Forum](https://discuss.ai.google.dev/) 上提出與 Gemma Cookbook 相關的問題，或者在 GitHub 上開一個 [issue](https://github.com/google-gemini/gemma-cookbook/issues)。
 
-## Wish list
+## 願望清單
 
 如果你想看到為特定功能/整合實現的額外 Cookbook，請通過在 [wish list](https://github.com/google-gemini/gemma-cookbook/blob/main/WISHLIST.md) 中添加你的功能請求來向我們發送 pull request。
 
