@@ -1,11 +1,12 @@
-A wish list of cookbooks showcasing:
+﻿A wish list of cookbooks showcasing:
 
-* Inference
-  * Integration with [Google GenKit](https://firebase.google.com/products/genkit)
-  * PaliGemma ntegration with [Google Mesop](https://github.com/google/mesop)
+* 推論
+  * 與 [Google GenKit](https://firebase.google.com/products/genkit) 的整合
+  * 與 [Google Mesop](https://github.com/google/mesop) 的 PaliGemma 整合
 
-* Fintuning
-  * Finetuning PaliGemma
+* 微調
+  * 微調 PaliGemma
 
-* Responsible AI
-  * Use [LLM Comparator](https://github.com/pair-code/llm-comparator) to compare Gemma with another LLM (i.e., Llama)
+* 負責任的 AI
+  * 使用 [LLM Comparator](https://github.com/pair-code/llm-comparator) 將 Gemma 與其他 LLM（例如 Llama）進行比較
+
