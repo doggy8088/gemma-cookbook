@@ -1,56 +1,56 @@
 # Gemma Research
 
-This directory contains research experiments and examples using Google's Gemma models.
+這個目錄收錄使用 Google Gemma 模型的研究實驗與範例。
 
-## Projects
+## 專案
 
-*   **[VaultGemma](#vaultgemma)**: Privacy-focused fine-tuning with differential privacy.
-*   **[T5Gemma](#t5gemma)**: Encoder-decoder variant of Gemma.
-*   **[TranslateGemma](#translategemma)**: Translation models built on Gemma 3
+*   **[VaultGemma](#vaultgemma)**：聚焦隱私、結合 differential privacy 的微調。
+*   **[T5Gemma](#t5gemma)**：Gemma 的 encoder-decoder 變體。
+*   **[TranslateGemma](#translategemma)**：建立於 Gemma 3 之上的翻譯模型
 
 ---
 
 ## VaultGemma
 
-VaultGemma is a privacy-focused variant of Google's Gemma model family, designed for secure fine-tuning and deployment with differential privacy guarantees. This implementation demonstrates how to fine-tune VaultGemma 1B on medical data using LoRA (Low-Rank Adaptation) and Opacus differential privacy.
+VaultGemma 是 Google Gemma 模型家族中以隱私為重點的變體，設計目的是在 differential privacy 保證下安全地進行微調與部署。這份實作示範如何使用 LoRA（Low-Rank Adaptation）與 Opacus，在醫療資料上微調 VaultGemma 1B。
 
-### Features
+### 功能特色
 
-- **4-bit Quantization**: Memory-efficient training using BitsAndBytes
-- **LoRA Fine-tuning**: Parameter-efficient adaptation with <2% trainable parameters
-- **Differential Privacy**: Privacy-preserving training with configurable ε and δ budgets
-- **Medical Q&A**: Fine-tuned on medical flashcard dataset for healthcare applications
+- **4-bit Quantization**：使用 BitsAndBytes 進行節省記憶體的訓練
+- **LoRA Fine-tuning**：以少於 2% 的可訓練參數完成高參數效率的適配
+- **Differential Privacy**：提供可設定 ε 與 δ 預算的隱私保護訓練
+- **Medical Q&A**：以醫療 flashcard dataset 微調，適用於 healthcare 應用
 
 ### Repository Structure
 
-This repository contains code for both training and inference:
+這個目錄同時包含訓練與推論的程式碼：
 
-* [Fine-tuning](#fine-tuning): How to fine-tune VaultGemma with differential privacy
-* [Inference](#inference): How to load and run fine-tuned VaultGemma models
+* [Fine-tuning](#fine-tuning)：如何使用 differential privacy 微調 VaultGemma
+* [Inference](#inference)：如何載入並執行已微調的 VaultGemma 模型
 
 ### Fine-tuning
 
 | Notebook Name | Description |
 :-------------- | ----------- |
-| [[VaultGemma]FineTuning_Inference_Huggingface.ipynb]([VaultGemma]FineTuning_Inference_Huggingface.ipynb) | Complete pipeline for fine-tuning VaultGemma 1B on medical data using LoRA adapters and differential privacy, with inference example |
+| [[VaultGemma]FineTuning_Inference_Huggingface.ipynb]([VaultGemma]FineTuning_Inference_Huggingface.ipynb) | 使用 LoRA adapters 與 differential privacy，在醫療資料上微調 VaultGemma 1B 的完整流程，並附帶推論範例 |
 
-#### Training Features
+#### 訓練特色
 - Medical Meadow Medical Flashcards dataset
-- 4-bit NF4 quantization for reduced memory footprint
-- LoRA adapters targeting all projection layers
-- Opacus differential privacy (ε=3.0, δ=1e-5)
-- Cosine learning rate schedule with warmup
-- Automatic checkpointing based on loss thresholds
+- 使用 4-bit NF4 quantization 降低記憶體占用
+- LoRA adapters 套用到所有 projection layers
+- Opacus differential privacy（ε=3.0、δ=1e-5）
+- 含 warmup 的 cosine learning rate schedule
+- 依 loss 門檻自動 checkpointing
 
 ### Inference
 
-The same notebook includes inference code to:
-- Load fine-tuned LoRA adapters
-- Generate responses to medical questions
-- Process single or batch queries
-- Adjust generation parameters (temperature, top_p)
+同一份 notebook 也包含以下推論程式碼：
+- 載入已微調的 LoRA adapters
+- 生成醫療問題的回應
+- 處理單筆或批次查詢
+- 調整 generation parameters（`temperature`、`top_p`）
 
-#### Quick Start
+#### 快速開始
 
 ```python
 from transformers import AutoModelForCausalLM, GemmaTokenizer
@@ -78,37 +78,37 @@ bitsandbytes
 kagglehub
 ```
 
-### Privacy Guarantees
+### 隱私保證
 
-This implementation provides (ε, δ)-differential privacy guarantees:
-- **Target ε**: 3.0 (configurable)
-- **Target δ**: 1e-5 (inverse of dataset size)
-- **Gradient clipping**: Max norm of 1.0
-- **Privacy accounting**: Automatic epsilon tracking via Opacus
+這份實作提供（ε, δ）-differential privacy 保證：
+- **Target ε**：3.0（可調整）
+- **Target δ**：1e-5（資料集大小的倒數）
+- **Gradient clipping**：最大 norm 為 1.0
+- **Privacy accounting**：透過 Opacus 自動追蹤 epsilon
 
 ---
 
 ## T5Gemma
 
-T5Gemma (aka encoder-decoder Gemma) is a family of encoder-decoder large language models, developed by adapting pretrained decoder-only models into an encoder-decoder architecture.
+T5Gemma（又稱 encoder-decoder Gemma）是一個 encoder-decoder 大型語言模型家族，做法是將預先訓練的 decoder-only 模型改造成 encoder-decoder 架構。
 
 ### Notebooks
 
 | Notebook Name | Description |
 | :--- | :--- |
-| [[T5Gemma]Example.ipynb]([T5Gemma]Example.ipynb) | Guide to sampling and fine-tuning T5Gemma using Flax and Hugging Face |
-| [[T5Gemma_2]Example.ipynb]([T5Gemma_2]Example.ipynb) | Guide to inference with T5Gemma 2 270m-270m via Hugging Face |
+| [[T5Gemma]Example.ipynb]([T5Gemma]Example.ipynb) | 使用 Flax 與 Hugging Face 對 T5Gemma 進行 sampling 與微調的指南 |
+| [[T5Gemma_2]Example.ipynb]([T5Gemma_2]Example.ipynb) | 透過 Hugging Face 對 T5Gemma 2 270m-270m 進行推論的指南 |
 
-### Features
+### 功能特色
 
-- **Encoder-Decoder Architecture**: Adapts decoder-only Gemma models to T5-style architecture.
-- **Scales**:
-    - **Gemma 2 scale**: 2B-2B, 9B-2B, and 9B-9B.
-    - **T5 scale**: Small, Base, Large, XL, and ML.
-- **Frameworks**: Examples provided for both **Hugging Face** (PyTorch) and **Flax** (Kauldron).
-- **Tasks**:
-    - **Sampling**: Basic text generation examples.
-    - **Fine-tuning**: Example of fine-tuning for machine translation (English to French) using the MTNT dataset.
+- **Encoder-Decoder Architecture**：將 decoder-only 的 Gemma 模型改造成 T5 風格架構。
+- **Scales**：
+    - **Gemma 2 scale**：2B-2B、9B-2B、9B-9B。
+    - **T5 scale**：Small、Base、Large、XL、ML。
+- **Frameworks**：同時提供 **Hugging Face**（PyTorch）與 **Flax**（Kauldron）範例。
+- **Tasks**：
+    - **Sampling**：基本文字生成範例。
+    - **Fine-tuning**：使用 MTNT dataset 進行英翻法機器翻譯微調的範例。
 
 ### Requirements
 
@@ -127,12 +127,12 @@ datasets
 
 ## TranslateGemma
 
-TranslateGemma is a family of lightweight, state-of-the-art open translation models from Google, based on the Gemma 3 family of models.
+TranslateGemma 是 Google 推出的輕量、最先進開放翻譯模型家族，建立於 Gemma 3 模型家族之上。
 
-TranslateGemma models are designed to handle translation tasks across 55 languages. Their relatively small size makes it possible to deploy them in environments with limited resources such as laptops, desktops or your own cloud infrastructure, democratizing access to state of the art translation models and helping foster innovation for everyone.
+TranslateGemma 模型設計用於處理 55 種語言的翻譯任務。由於模型相對精巧，因此能部署在筆電、桌機或自建 cloud infrastructure 等資源有限的環境中，讓更多人能取得最先進翻譯模型，也有助於促進更廣泛的創新。
 
 ### Notebooks
 
 | Notebook Name | Description |
 | :--- | :--- |
-| [[TranslateGemma]Example.ipynb]([TranslateGemma]Example.ipynb) | Guide to inference with TranslateGemma via Hugging Face |
+| [[TranslateGemma]Example.ipynb]([TranslateGemma]Example.ipynb) | 透過 Hugging Face 使用 TranslateGemma 進行推論的指南 |

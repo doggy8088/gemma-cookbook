@@ -1,9 +1,9 @@
-# Deploying Gemma Models to Google Cloud Run
+# 將 Gemma Models 部署到 Google Cloud Run
 
-This guide shows you how to deploy Google Gemma LLM to Google Cloud Run. These pre-built containers leverage Ollama for serving, with additional added support for the Google GenAI SDK . Use off the shelf, or fine-tune for your own use-cases.  These containers have both Google GenAI SDK and OpenAI SDK compatible.
+本指南說明如何將 Google Gemma LLM 部署到 Google Cloud Run。這些預先建好的 containers 使用 Ollama 來提供 serving，並額外加入對 Google GenAI SDK 的支援。你可以直接使用現成映像，也可以針對自己的 use cases 進行微調。這些 containers 同時相容於 Google GenAI SDK 與 OpenAI SDK。
 
-## Supported Models and Pre-Built Docker Images
-Our service supports the following Gemma models:
+## 支援的模型與預建 Docker Images
+本服務支援以下 Gemma 模型：
 * gemma-3-1b-it
 * gemma-3-4b-it
 * gemma-3-12b-it
@@ -11,10 +11,10 @@ Our service supports the following Gemma models:
 * gemma-3n-e2b-it
 * gemma-3n-e4b-it
 
-You can provide your own fine-tuned models following [section below](#deploying-and-using-fine-tuned-gemma3-models)
+你也可以依照[下方章節](#部署並使用微調後的-gemma3-模型)提供自己的微調模型。
 
-### Pre-built Docker Images
-We provide pre-built Docker images for convenience. These images have the respective Gemma models bundled:
+### 預建 Docker Images
+為了方便使用，我們提供預建 Docker images。這些 images 已內含對應的 Gemma 模型：
 * `us-docker.pkg.dev/cloudrun/container/gemma/gemma3-1b`
 * `us-docker.pkg.dev/cloudrun/container/gemma/gemma3-4b`
 * `us-docker.pkg.dev/cloudrun/container/gemma/gemma3-12b`
@@ -22,12 +22,12 @@ We provide pre-built Docker images for convenience. These images have the respec
 * `us-docker.pkg.dev/cloudrun/container/gemma/gemma3n-e2b`
 * `us-docker.pkg.dev/cloudrun/container/gemma/gemma3n-e4b`
 
-These images are automatically built and published using [Cloud Build](./cloudbuild.yaml) when there's a code change in this directory.
+當此目錄中的程式碼有變更時，這些 images 會透過 [Cloud Build](./cloudbuild.yaml) 自動建置並發佈。
 
-## Quickstart - Deploying to Cloud Run
-This section guides you through deploying a Cloud Run service using our provided Docker images.  If you've deployed Gemma to Cloud Run from AI Studio, it mirrors this process.
+## Quickstart - 部署到 Cloud Run
+本節會帶你使用我們提供的 Docker images 部署 Cloud Run service。如果你曾從 AI Studio 將 Gemma 部署到 Cloud Run，流程會與此相同。
 
-Use the following `gcloud run deploy` command to deploy your Cloud Run service:
+使用以下 `gcloud run deploy` 命令部署 Cloud Run service：
 ```bash
 gcloud run deploy {SERVICE_NAME} \
  --image {IMAGE} \
@@ -45,47 +45,47 @@ gcloud run deploy {SERVICE_NAME} \
  --region {REGION}
 ```
 
-Explanation of Variables:
-* `SERVICE_NAME`: The unique name for your Cloud Run service.
-* `IMAGE`: The Docker image to deploy. This can be one of our [pre-built images](#pre-built-docker-images) or an image you built yourself from this repository
-* `YOUR_API_KEY`: **Crucial for authentication**. Set this to a strong, unique API key string of your choice. This key will be required to access your service. See the [Authentication](#authentication) section below for more details. If you're deploying from AI Studio, this is generated on your behalf. Note that this should *not* be an API key re-used from another service.
-* `REGION`: The Google Cloud region where your Cloud Run service will be deployed (e.g., us-central1). Ensure this region supports the specified GPU type. See [GPU support for Cloud Run services](https://cloud.google.com/run/docs/configuring/services/gpu) for more details.  If you're deploying from AI Studio, this defaults to europe-west1.
-* For other flags and optimizing setting, see [Run LLM inference on Cloud Run GPUs with Gemma 3 and Ollama](https://cloud.google.com/run/docs/tutorials/gpu-gemma-with-ollama#build-and-deploy) for more details.
+變數說明：
+* `SERVICE_NAME`：你的 Cloud Run service 唯一名稱。
+* `IMAGE`：要部署的 Docker image。可以是我們提供的[預建 image](#預建-docker-images)，也可以是你從本 repository 自行建置的 image。
+* `YOUR_API_KEY`：**驗證用關鍵設定**。請設為你自選的一組強且唯一的 API key 字串。之後存取服務時會需要這個 key。更多細節請見下方[驗證](#驗證)章節。如果你是從 AI Studio 部署，這個值會代你產生。請注意，不應重複使用其他服務的 API key。
+* `REGION`：部署 Cloud Run service 的 Google Cloud region（例如 `us-central1`）。請確認該 region 支援指定的 GPU 類型。更多資訊請見 [GPU support for Cloud Run services](https://cloud.google.com/run/docs/configuring/services/gpu)。如果你是從 AI Studio 部署，預設為 `europe-west1`。
+* 其他 flag 與最佳化設定，請參考 [Run LLM inference on Cloud Run GPUs with Gemma 3 and Ollama](https://cloud.google.com/run/docs/tutorials/gpu-gemma-with-ollama#build-and-deploy)。
 
-After successful deployment, the gcloud command will output the Cloud Run service URL. Save this URL as `<cloud_run_url>` for interacting with your service.
+部署成功後，gcloud 命令會輸出 Cloud Run service URL。請將這個 URL 記下為 `<cloud_run_url>`，後續與服務互動時會用到。
 
-## Authentication
-To get started quickly, you can deploy the Cloud Run service with public (unauthenticated) access using `--allow-unauthenticated`.  The service will validate the `API_KEY` environment variable you set during deployment against incoming requests. Longer term, we recommend enabling IAM authentication in Cloud Run and updating your app using the google-auth SDK.
+## 驗證
+若要快速開始，你可以使用 `--allow-unauthenticated`，讓 Cloud Run service 以公開（未驗證）方式存取。服務仍會驗證你在部署時設定的 `API_KEY` 環境變數與傳入請求是否相符。長期而言，我們建議在 Cloud Run 啟用 IAM authentication，並在 app 中使用 google-auth SDK。
 
-### Using the API Key
-#### Setting the API Key
-* Environment Variable: As shown in the deployment command: `--set-env-vars=API_KEY={YOUR_API_KEY}`.
-* **Secret Manager (recommended for production)**:
-For enhanced security, store your API key in Google Cloud Secret Manager and expose it as an environment variable `--update-secrets=API_KEY={yourSecrete}:latest`. For more details, refer to the [Cloud Run Secrets documentation](https://cloud.google.com/run/docs/configuring/services/secrets#access-secrets).
+### 使用 API Key
+#### 設定 API Key
+* Environment Variable：如部署命令所示：`--set-env-vars=API_KEY={YOUR_API_KEY}`。
+* **Secret Manager（建議用於正式環境）**：
+為了提升安全性，請將 API key 存放在 Google Cloud Secret Manager，並以環境變數方式暴露，例如 `--update-secrets=API_KEY={yourSecrete}:latest`。更多細節請參考 [Cloud Run Secrets documentation](https://cloud.google.com/run/docs/configuring/services/secrets#access-secrets)。
 
-#### Using the API Key in Requests
-You will need to include this `YOUR_API_KEY` in every request to your Cloud Run service, as shown in the [Interacting with the Service](#interacting-with-the-cloud-run-service) section.
+#### 在請求中使用 API Key
+你必須在每個送往 Cloud Run service 的請求中帶上這個 `YOUR_API_KEY`，如下方[與服務互動](#與-cloud-run-service-互動)章節所示。
 
-### Using IAM Authentication (recommended)
-For production, you should configure your Cloud Run service to use IAM Authentication.  You can enable this by re-deploying your Cloud Run service with the `--no-allow-unauthenticated` flag.  Note that this will require changes to your application code, to ensure incoming requests pass the appropriate identity token.
-To learn more about IAM authentication and Cloud Run, refer to [Authenticating service-to-service](https://cloud.google.com/run/docs/authenticating/service-to-service#use_the_authentication_libraries).
+### 使用 IAM Authentication（建議）
+正式環境應將 Cloud Run service 設定為使用 IAM Authentication。你可以重新部署 Cloud Run service，加入 `--no-allow-unauthenticated` flag 來啟用。請注意，這會要求你修改應用程式程式碼，確保傳入請求帶有正確的 identity token。
+更多 IAM authentication 與 Cloud Run 的資訊，請參考 [Authenticating service-to-service](https://cloud.google.com/run/docs/authenticating/service-to-service#use_the_authentication_libraries)。
 
-## Interacting with the Cloud Run Service
-Once your Cloud Run service is deployed, you can interact with it using curl, Google's GenAI SDK, or OpenAI's SDK.
+## 與 Cloud Run Service 互動
+當 Cloud Run service 部署完成後，你可以使用 curl、Google GenAI SDK，或 OpenAI SDK 與其互動。
 
-GenAI API endpoints:
-* [`/v1beta/{model=models/*}:generateContent`](https://ai.google.dev/api/generate-content#method:-models.generatecontent) - Generates a model response given an input GenerateContentRequest.
-* [`/v1beta/{model=models/*}:streamGenerateContent`](https://ai.google.dev/api/generate-content#method:-models.streamgeneratecontent) - Generates a streamed response from the model given an input GenerateContentRequest.
+GenAI API endpoints：
+* [`/v1beta/{model=models/*}:generateContent`](https://ai.google.dev/api/generate-content#method:-models.generatecontent) - 在輸入 GenerateContentRequest 後，產生模型回應。
+* [`/v1beta/{model=models/*}:streamGenerateContent`](https://ai.google.dev/api/generate-content#method:-models.streamgeneratecontent) - 在輸入 GenerateContentRequest 後，產生串流式模型回應。
 
-OpenAI API endpoint:
-* Additionally, an OpenAI-compatible endpoint is available at `/v1/chat/completions`.
+OpenAI API endpoint：
+* 另外也提供 OpenAI 相容端點 `/v1/chat/completions`。
 
-Placeholders:
-* `<cloud_run_url>`: The URL of your deployed Cloud Run service.
-* `<YOUR_API_KEY>`: The API key you configured during deployment.
-* `<model>`: The model name you deployed (e.g., gemma-3-1b-it, gemma-3-4b-it, or your fine-tuned model name).
+佔位符說明：
+* `<cloud_run_url>`：你部署完成的 Cloud Run service URL。
+* `<YOUR_API_KEY>`：你在部署時設定的 API key。
+* `<model>`：你部署的模型名稱（例如 `gemma-3-1b-it`、`gemma-3-4b-it`，或你的自訂微調模型名稱）。
 
-### 1. Using curl:
+### 1. 使用 curl：
 
 Generate Content
 ```bash
@@ -111,16 +111,16 @@ curl "<cloud_run_url>/v1beta/models/<model>:streamGenerateContent?key={YOUR_API_
       }'
 ```
 
-### 2. Using Google GenAI SDK (Python)
+### 2. 使用 Google GenAI SDK（Python）
 
-Refer to the [official GenAI SDK documentation](https://ai.google.dev/gemini-api/docs/libraries) for more details.
+更多細節請參考[官方 GenAI SDK 文件](https://ai.google.dev/gemini-api/docs/libraries)。
 
-#### 2.1 Install GenAI SDK
+#### 2.1 安裝 GenAI SDK
 ```
 pip install --upgrade google-genai
 ```
 
-#### 2.2 Python example:
+#### 2.2 Python 範例：
 ```python
 from google import genai
 from google.genai.types import HttpOptions
@@ -146,11 +146,11 @@ for chunk in response:
    print(chunk.text, end="")
 ```
 
-### 3. Using OpenAI API and SDK
+### 3. 使用 OpenAI API 與 SDK
 
-#### 3.1 Python Code Example
+#### 3.1 Python 程式範例
 
-Refer to the [official OpenAI SDK documentation](https://platform.openai.com/docs/libraries#install-an-official-sdk) for more details.
+更多細節請參考[官方 OpenAI SDK 文件](https://platform.openai.com/docs/libraries#install-an-official-sdk)。
 
 ```bash
 pip install openai
@@ -182,7 +182,7 @@ completion = openAIclient.chat.completions.create(
 print(completion.choices[0].message.content)
 ```
 
-#### 3.2 `curl` Example (OpenAI Compatible)
+#### 3.2 `curl` 範例（OpenAI 相容）
 ```bash
 curl <cloud_run_url>/v1/chat/completions \
  -H "Content-Type: application/json" \
@@ -202,11 +202,11 @@ curl <cloud_run_url>/v1/chat/completions \
  }'
 ```
 
-### 4. Using Ollama SDK
+### 4. 使用 Ollama SDK
 
-#### 4.1 Python Code Example
+#### 4.1 Python 程式範例
 
-Refer to the [Ollama libraries documentation](https://github.com/ollama/ollama?tab=readme-ov-file#libraries) for more details.
+更多細節請參考 [Ollama libraries documentation](https://github.com/ollama/ollama?tab=readme-ov-file#libraries)。
 
 ```bash
 pip install ollama
@@ -244,33 +244,33 @@ for chunk in stream:
   print(chunk['message']['content'], end='', flush=True)
 ```
 
-## Deploying and Using Fine-Tuned Gemma3 Models
+## 部署並使用微調後的 Gemma3 模型
 
-This section details how to deploy and use your own custom fine-tuned Gemma models with the Cloud Run service. This involves creating a custom Ollama model, uploading its components to GCS, and mounting that GCS bucket to your Cloud Run service.
+本節說明如何使用 Cloud Run service 部署並使用你自己的自訂微調 Gemma 模型。這個流程包括建立自訂 Ollama 模型、將其組件上傳到 GCS，以及把該 GCS bucket 掛載到你的 Cloud Run service。
 
-Steps:
+步驟如下：
 
-#### 1. Customize the Model using Ollama Locally:
+#### 1. 在本機使用 Ollama 自訂模型：
 
-Follow https://github.com/ollama/ollama?tab=readme-ov-file#customize-a-model to import GGUF model in the Modelfile, and create the model in Ollama
+依照 https://github.com/ollama/ollama?tab=readme-ov-file#customize-a-model 的說明，在 Modelfile 中匯入 GGUF model，並於 Ollama 中建立模型
 ```bash
 ollama create <your-custom-model-name> -f Modelfile
 ```
-This command will process your GGUF file and create the necessary blobs and manifests for Ollama in your [local Ollama models directory](https://github.com/ollama/ollama/blob/main/docs/faq.md#where-are-models-stored).
+這個命令會處理你的 GGUF 檔案，並在你的[本機 Ollama models directory](https://github.com/ollama/ollama/blob/main/docs/faq.md#where-are-models-stored) 中建立 Ollama 所需的 blobs 與 manifests。
 
-#### 2. Locate and Upload Ollama Model Files to GCS:
+#### 2. 找出並上傳 Ollama 模型檔到 GCS：
 
-Navigate to your [local Ollama models directory](https://github.com/ollama/ollama/blob/main/docs/faq.md#where-are-models-stored). You will find `blobs/` and `manifests/` subdirectories. These contain the components of your newly created custom model.
+切換到你的[本機 Ollama models directory](https://github.com/ollama/ollama/blob/main/docs/faq.md#where-are-models-stored)。你會看到 `blobs/` 與 `manifests/` 子目錄，裡面就是新建立自訂模型的組件。
 
-Upload the contents generated for your custom model to your GCS bucket in corresponding `blobs/` and `manifests/` subdirectories. This will ensure the correct structure for Ollama to find your model.
+請將自訂模型產生的內容，上傳到 GCS bucket 中對應的 `blobs/` 與 `manifests/` 子目錄。這樣才能保持 Ollama 可辨識的正確結構。
 
-For example,
+例如：
 ```bash
 cd <your-local-ollama-model-dir>
 gcloud storage cp --recursive . gs://YOUR_MODEL_BUCKET_NAME
 ```
 
-#### 3. Deploy Cloud Run Service with GCS Volume Mount
+#### 3. 以 GCS Volume Mount 部署 Cloud Run Service
 
 ```bash
 gcloud run deploy {SERVICE_NAME} \
@@ -291,19 +291,19 @@ gcloud run deploy {SERVICE_NAME} \
  --add-volume-mount volume={VOLUME_NAME},mount-path=/models
 ```
 
-Explanation of Variables:
-* `VOLUME_NAME`: A name for your volume (e.g., my-gemma-volume).
-* `YOUR_MODEL_BUCKET_NAME`: The name of your GCS bucket.
+變數說明：
+* `VOLUME_NAME`：你的 volume 名稱（例如 `my-gemma-volume`）。
+* `YOUR_MODEL_BUCKET_NAME`：你的 GCS bucket 名稱。
 
-Note that you have two options for the `{IMAGE}`:
+其中 `{IMAGE}` 有兩種選擇：
 
-Option A: Using a Pre-built Image with GCS Mount (Recommended for convenience):
+Option A：使用預建 image 並掛載 GCS（建議，最省事）：
 
-You can use one of our [pre-built images](#pre-built-docker-images) (which contain baked-in models). When you mount a GCS bucket to `/models`, the content of the GCS bucket will override and replace any models that were originally baked into the Docker image at that path. This means your custom models from GCS will be served.
+你可以直接使用我們的[預建 image](#預建-docker-images)（內含 baked-in models）。當你將 GCS bucket 掛載到 `/models` 時，GCS bucket 的內容會覆蓋並取代原本 image 在該路徑內建的模型。因此服務會改以 GCS 中的自訂模型為主。
 
-Option B: Building Your Own Image (without baked-in models) with GCS Mount:
+Option B：自行建置 image（不內建模型）並掛載 GCS：
 
-If you prefer a smaller Docker image or want full control over the image contents, you can build your own image based on our [Dockerfile](./Dockerfile). In this scenario, you will remove the `ollama pull` command from your Dockerfile, ensuring no models are baked into the image. Then, you deploy this custom-built image with the GCS volume mount.
+如果你想要更小的 Docker image，或希望完全掌控 image 內容，可以依照我們的 [Dockerfile](./Dockerfile) 自行建置。這種情況下，你會移除 Dockerfile 中的 `ollama pull` 命令，確保 image 不內建任何模型，接著再搭配 GCS volume mount 部署這個自訂 image。
 
 ```
 # Example Dockerfile snippet (within your build stage)
@@ -314,10 +314,10 @@ ENV OLLAMA_MODELS /models
 # RUN /bin/ollama serve & sleep 5 && ollama pull $MODEL
 # ... (rest of your Dockerfile) ...
 ```
-Then [build your custom image](https://cloud.google.com/run/docs/building/containers#use-dockerfile).
+之後再[建置你的自訂 image](https://cloud.google.com/run/docs/building/containers#use-dockerfile)。
 
-#### 4. Interact with Your Custom Model:
-Now you can use your custom fine-tuned models by specifying the `<your-custom-model-name>` (the name you used in `ollama create`) in your API requests, just like with the pre-built models.
+#### 4. 與你的自訂模型互動：
+現在，你可以像使用預建模型一樣，在 API 請求中指定 `<your-custom-model-name>`（也就是你在 `ollama create` 時使用的名稱）來使用自訂微調模型。
 
 ```python
 from google import genai
@@ -332,4 +332,4 @@ response = client.models.generate_content_stream(
 for chunk in response:
    print(chunk.text, end="")
 ```
-Similarly for OpenAI SDK and curl examples, replace `<model>` with `<your-custom-model-name>`.
+對於 OpenAI SDK 與 curl 範例，也只要把 `<model>` 替換成 `<your-custom-model-name>` 即可。

@@ -1,81 +1,76 @@
+# 歡迎來到 Gemma Cookbook
+這是收錄 [Google Gemma](https://ai.google.dev/gemma/) 指南與範例的文件集合。
 
-# Welcome to the Gemma Cookbook
-This is a collection of guides and examples for [Google Gemma](https://ai.google.dev/gemma/).
+> **免責聲明：** Gemma 是由 Google DeepMind 建立、面向開發者的模型家族。這份 cookbook 收錄的是 Google Gemma 的指南與範例。請留意，Gemma 屬於開放模型，在你依照本 cookbook 的範例進行開發時，仍可能出現 hallucination。
 
-> **Disclaimer:** Gemma is a family of developer-focused models built by Google DeepMind. This cookbook is a collection of guides and examples for Google Gemma. Please keep in mind that Gemma is an open model and can hallucinate as you build on examples in this cookbook.
-
-## Get started with the Gemma models
-Gemma is a family of lightweight, generative artificial intelligence (AI) open models, built from the same research and technology used to create the Gemini models. The Gemma model family includes:
+## 開始使用 Gemma 模型
+Gemma 是一個輕量級、生成式人工智慧（AI）的開放模型家族，建立於與 Gemini 模型相同的研究與技術基礎之上。Gemma 模型家族包含：
 * Gemma\
-  The core models of the Gemma family.
+  Gemma 模型家族的核心模型。
   * [Gemma](https://ai.google.dev/gemma/docs/core/model_card)\
-    For a variety of text generation tasks and can be further tuned for specific use cases
+    適用於各式文字生成任務，並可依特定使用情境進一步微調
   * [Gemma 2](https://ai.google.dev/gemma/docs/core/model_card_2)\
-    Higher-performing and more efficient, available in 2B, 9B, 27B parameter sizes
+    效能更高、效率更佳，提供 2B、9B、27B 參數規模
   * [Gemma 3](https://ai.google.dev/gemma/docs/core/model_card_3)\
-    Longer context window and handling text and image input, available in 1B, 4B, 12B, and 27B parameter sizes
+    具備更長的 context window，可處理文字與圖片輸入，提供 1B、4B、12B、27B 參數規模
   * [Gemma 3n](https://ai.google.dev/gemma/docs/gemma-3n/model_card) \
-    Designed for efficient execution on low-resource devices. Handling text, image, video, and audio input, available in E2B and E4B parameter sizes
+    專為低資源裝置上的高效率執行而設計，可處理文字、圖片、影片與音訊輸入，提供 E2B 與 E4B 參數規模
   * [Gemma 4](https://ai.google.dev/gemma/docs/core/model_card_4)\
-    Well-suited for reasoning, agentic workflows, coding, and multimodal understanding, available in E2B, E4B, 26B A4B, and 31B parameter sizes.
-* Gemma variants
+    特別適合理解推理、agentic 工作流程、程式開發與多模態理解，提供 E2B、E4B、26B A4B 與 31B 參數規模
+* Gemma 變體模型
   * [CodeGemma](https://ai.google.dev/gemma/docs/codegemma)\
-    Fine-tuned for a variety of coding tasks
+    針對各式程式設計任務完成微調
   * [DataGemma](https://ai.google.dev/gemma/docs/datagemma)\
-    Fine-tuned for using Data Commons to address AI hallucinations
+    透過 Data Commons 微調，以降低 AI hallucination 問題
   * [FunctionGemma](https://ai.google.dev/gemma/docs/functiongemma)\
-    Fine-tuned on Gemma 3 270M IT checkpoint for function calling
+    以 Gemma 3 270M IT checkpoint 為基礎，針對 function calling 完成微調
   * [MedGemma](https://developers.google.com/health-ai-developer-foundations/medgemma)
-    The MedGemma collection contains Google's most capable open models for medical text and image comprehension, built on Gemma 3. Developers can use MedGemma to accelerate building healthcare-based AI applications. MedGemma comes in two variants: a 4B multimodal version and a 27B text-only version.
+    MedGemma 集合是 Google 目前能力最強的醫療文字與影像理解開放模型，建立於 Gemma 3 之上。開發者可以利用 MedGemma 加速打造醫療保健 AI 應用。MedGemma 提供兩種變體：4B 多模態版本與 27B 純文字版本。
   * [PaliGemma](https://ai.google.dev/gemma/docs/paligemma/model-card)\
-    Vision Language Model\
-    For a deeper analysis of images and provide useful insights
+    視覺語言模型（VLM）\
+    可更深入分析圖片並提供有用洞察
   * [PaliGemma 2](https://ai.google.dev/gemma/docs/paligemma/model-card-2)\
-    VLM which incorporates the capabilities of the Gemma 2 models
+    結合 Gemma 2 模型能力的 VLM
   * [RecurrentGemma](https://ai.google.dev/gemma/docs/recurrentgemma)\
-    Based on [Griffin](https://arxiv.org/abs/2402.19427) architecture\
-    For a variety of text generation tasks
+    基於 [Griffin](https://arxiv.org/abs/2402.19427) 架構\
+    適用於各式文字生成任務
   * [ShieldGemma](https://ai.google.dev/gemma/docs/shieldgemma/model_card)\
-    Fine-tuned for evaluating the safety of text prompt input and text output responses against a set of defined safety policies
+    針對文字 prompt 輸入與文字輸出回應的安全性評估完成微調，依據已定義的安全政策進行判定
   * [ShieldGemma 2](https://ai.google.dev/gemma/docs/shieldgemma/model_card_2)\
-    Fine-tuned on Gemma 3 4B IT checkpoint for image safety classification
+    以 Gemma 3 4B IT checkpoint 為基礎，針對影像安全分類完成微調
   * [T5Gemma](https://deepmind.google/models/gemma/t5gemma)\
-    A collection of encoder-decoder models that provide a strong quality-inference efficiency tradeoff
+    一組 encoder-decoder 模型，在品質與推論效率之間提供優異權衡
   * [TranslateGemma](https://huggingface.co/collections/google/translategemma)\
-    A collection of open model designed to handle translation tasks across 55 languages
+    一組為 55 種語言翻譯任務設計的開放模型
   * [TxGemma](https://deepmind.google/models/gemma/txgemma)\
-    A collection of open models designed to improve the efficiency of therapeutic development
+    一組為提升治療開發效率而設計的開放模型
   * [VaultGemma](https://deepmind.google/models/gemma/vaultgemma)\
-    An open model trained from the ground up using differential privacy to prevent memorization and leaking of training data examples
+    從頭以 differential privacy 訓練的開放模型，可避免記憶與洩漏訓練資料範例
 
-You can find the Gemma models on the Hugging Face Hub, Kaggle, Google Cloud Vertex AI Model Garden, and [ai.nvidia.com](https://ai.nvidia.com).
+你可以在 Hugging Face Hub、Kaggle、Google Cloud Vertex AI Model Garden，以及 [ai.nvidia.com](https://ai.nvidia.com) 找到 Gemma 模型。
 
-## Table of Notebooks
+## Notebook 目錄
 * [Gemma](Gemma/README.md)
 * [CodeGemma](CodeGemma/README.md)
 * [FunctionGemma](FunctionGemma/README.md)
 * [PaliGemma](PaliGemma/README.md)
 * [MedGemma](MedGemma/README.md)
-* [MedGemma on Google-Health](https://github.com/Google-Health/medgemma/tree/main/notebooks) : Google-Health has additional notebooks for using MedGemma
+* [Google-Health 上的 MedGemma](https://github.com/Google-Health/medgemma/tree/main/notebooks) : Google-Health 另外提供使用 MedGemma 的 notebooks
 * [TxGemma](TxGemma/README.md)
-* [Workshops and technical talks](Workshops/README.md)
-* [Research](Research/): Notebooks for research focused models
-* [Showcase complex end-to-end use cases](Demos/README.md)
-* [Gemma on Google Cloud](https://github.com/GoogleCloudPlatform/generative-ai/tree/main/open-models) : GCP open models has additional notebooks for using Gemma
+* [工作坊與技術演講](Workshops/README.md)
+* [Research](Research/)：聚焦研究模型的 notebooks
+* [複雜端到端使用案例展示](Demos/README.md)
+* [Google Cloud 上的 Gemma](https://github.com/GoogleCloudPlatform/generative-ai/tree/main/open-models) : GCP open models 另外提供使用 Gemma 的 notebooks
 
-## Get help
-Ask a Gemma cookbook-related question on the [developer forum](https://discuss.ai.google.dev/c/gemma/10), or open an [issue](https://github.com/google-gemini/gemma-cookbook/issues) on GitHub.
+## 取得協助
+如果你有 Gemma Cookbook 相關問題，歡迎到 [developer forum](https://discuss.ai.google.dev/c/gemma/10) 提問，或在 GitHub 開啟 [issue](https://github.com/google-gemini/gemma-cookbook/issues)。
 
-## Wish list
-If you want to see additional cookbooks implemented for specific features/integrations, please open a new issue with [“Feature Request” template](https://github.com/google-gemini/gemma-cookbook/issues/new?template=feature_request.yml).
+## Wish List
+如果你想看到針對特定功能或整合情境的更多 cookbook，請使用 [“Feature Request” template](https://github.com/google-gemini/gemma-cookbook/issues/new?template=feature_request.yml) 開啟新 issue。
 
-If you want to make contributions to the Gemma Cookbook project, you are welcome to pick any idea in the [“Wish List”](https://github.com/google-gemini/gemma-cookbook/labels/wishlist) and implement it.
+如果你想為 Gemma Cookbook 專案做出貢獻，歡迎從 [“Wish List”](https://github.com/google-gemini/gemma-cookbook/labels/wishlist) 挑選任何想法並加以實作。
 
-## Contributing
-Contributions are always welcome. Please read [contributing](https://github.com/google-gemini/gemma-cookbook/blob/main/CONTRIBUTING.md) before implementation.
+## 貢獻
+歡迎任何貢獻。開始實作前，請先閱讀 [contributing](https://github.com/google-gemini/gemma-cookbook/blob/main/CONTRIBUTING.md)。
 
-Thank you for developing with Gemma! We’re excited to see what you create.
-
-## Translation of this repository
-* [Traditional Chinese](https://github.com/doggy8088/gemma-cookbook)
-* [Simplified Chinese](https://github.com/xiaoxiong1006/gemma-cookbook)
+感謝你使用 Gemma 進行開發，我們很期待看到你的成果。

@@ -1,97 +1,76 @@
 # gemma-web-service
 
-A simple implementation of a Gemma web service using Python, Keras, JAX and the 
-FastAPI library.
+這是一個使用 Python、Keras、JAX 與 FastAPI library 實作的簡易 Gemma web service。
 
-### Install required software
+### 安裝必要軟體
 
-This project uses Python 3 and Virtual Environments (`venv`) to manage packages
-and run the application. The following installation instructions are for a Linux
-host machine.
+這個專案使用 Python 3 與 Virtual Environments（`venv`）來管理套件並執行應用程式。以下安裝說明以 Linux host machine 為例。
 
-To install the required software:
+若要安裝必要軟體：
 
-*  Install Python 3 and the `venv` virtual environment package for Python:
+* 安裝 Python 3 與 Python 的 `venv` virtual environment package：
 
         sudo apt update
         sudo apt install git pip python3-venv
 
-#### Install Python libraries
+#### 安裝 Python libraries
 
-Install the Python libraries with the `venv` Python virtual environment
-activated to manage Python packages and dependencies. Make sure you activate the
-Python virtual environment *before* installing Python libraries with the `pip`
-installer. For more information about using Python virtual environments, see the
-[Python venv](https://docs.python.org/3/library/venv.html) documentation.
+請在啟用 `venv` Python virtual environment 的情況下安裝 Python libraries，以便管理 Python packages 與 dependencies。請務必先啟用 Python virtual environment，再使用 `pip` installer 安裝 Python libraries。更多關於 Python virtual environments 的資訊，請參考 [Python venv](https://docs.python.org/3/library/venv.html) 文件。
 
-To install the Python libraries:
+安裝 Python libraries 的步驟如下：
 
-1.  In a terminal window, navigate to the `gemma-web-service` directory:
+1. 在 terminal 視窗中，切換到 `gemma-web-service` 目錄：
 
         cd Gemma/personal-code-assistant/gemma-web-service/
 
-1.  Configure and activate Python virtual environment (venv) for this project:
+1. 為此專案設定並啟用 Python virtual environment（venv）：
 
         python3 -m venv venv
         source venv/bin/activate
 
-1.  Install the required Python libraries for this project using the
-    `setup_python` script:
+1. 使用 `setup_python` script 安裝本專案所需的 Python libraries：
 
         ./setup_python.sh
 
-Tip: On Linux operating systems, you may need to allow execution of the bash
-script by running the command `chmod +x setup_python.sh`.
+提示：在 Linux 作業系統上，你可能需要先執行 `chmod +x setup_python.sh`，允許該 bash script 執行。
 
-#### Set environment variables
+#### 設定環境變數
 
-This project requires a few environmental environment variables to run,
-including a Kaggle username and a Kaggle API token. You must have a Kaggle
-account and request access to the Gemma models to be able to download them. For
-this project, you add your Kaggle Username and Kaggle API token to two `.env`
-files, which are read by the web application and the tuning program,
-respectively.
+這個專案執行時需要幾個環境變數，包括 Kaggle username 與 Kaggle API token。你必須擁有 Kaggle 帳號，並申請 Gemma 模型的存取權限，才能下載模型。對此專案而言，你需要把 Kaggle Username 與 Kaggle API token 寫入兩個 `.env` 檔案，分別供 web application 與 tuning program 讀取。
 
-Caution: Treat your Kaggle API token like a password and protect it
-appropriately. Don't embed your key in publicly published code.
+注意：請將 Kaggle API token 視同密碼妥善保護。不要把金鑰寫進公開發佈的程式碼中。
 
-To set the environment variables:
+設定環境變數的步驟如下：
 
-1.  Obtain your Kaggle username and your token key by following the instructions
-    in the [Kaggle documentation](https://www.kaggle.com/docs/api#authentication).
-1.  Get access to the Gemma model by following the *Get access to Gemma*
-    instructions in the [Gemma Setup](/gemma/docs/setup#get-access) page.
-1.  Create an environment variable file for the project, by creating a
-    `.env` text file at this location in your clone of the project:
+1. 依照 [Kaggle documentation](https://www.kaggle.com/docs/api#authentication) 取得你的 Kaggle username 與 token key。
+1. 依照 [Gemma Setup](/gemma/docs/setup#get-access) 頁面中的 *Get access to Gemma* 指示，取得 Gemma 模型存取權限。
+1. 在你複製下來的專案中，於下列位置建立專案專用的環境變數檔案 `.env`：
 <pre>
 personal-code-assistant/gemma-web-service/.env
 </pre>
-1.  After creating the `.env` text file, add the following settings to it:
+1. 建立 `.env` 後，加入下列設定：
 
         KAGGLE_USERNAME=<YOUR_KAGGLE_USERNAME_HERE>
         KAGGLE_KEY=<YOUR_KAGGLE_KEY_HERE>
 
-### Run and test the application
+### 執行與測試應用程式
 
-Once you have completed the installation and configuration of the project, run
-the web application to confirm that you have configured it correctly. You should
-do this as a baseline check before editing the project for your own use.
+完成專案安裝與設定後，請先執行 web application，確認設定正確。這應作為你開始依自身需求修改專案前的 baseline check。
 
-To run and test the project:
+執行與測試專案的步驟如下：
 
-1.  In a terminal window, navigate to the `gemma-web-service` directory:
+1. 在 terminal 視窗中，切換到 `gemma-web-service` 目錄：
 
         cd personal-code-assistant/gemma-web-service/
 
-1.  Run the application using the `run_service` script:
+1. 使用 `run_service` script 執行應用程式：
 
         ./run_service.sh
 
-1.  After starting the web service, the program code lists a URL where
-    you can access the service. Typically, this address is:
+1. 啟動 web service 後，程式會列出可存取該服務的 URL。通常會是：
 
         http://localhost:8000/
 
-1.  Test the service by running the `test_post` script:
+1. 使用 `test_post` script 測試服務：
 
         ./test/test_post.sh

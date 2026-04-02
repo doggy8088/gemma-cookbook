@@ -1,14 +1,14 @@
-# Quick Start Guide: Creating 0.9B and Smaller Gemma 3n Models
+# Quick Start Guide: 建立 0.9B 與更小的 Gemma 3n Models
 
-## TL;DR - Get Started in 5 Minutes
+## TL;DR - 5 分鐘快速上手
 
-### For 0.9B Model (26 layers - Recommended for 4-6GB RAM Mobile)
+### 針對 0.9B 模型（26 layers，建議用於 4-6GB RAM Mobile）
 
-1. **Open** the MatFormer Lab notebook: `[Gemma_3n]MatFormer_Lab.ipynb`
+1. **開啟** MatFormer Lab notebook：`[Gemma_3n]MatFormer_Lab.ipynb`
 
-2. **Navigate to the "Config details" cell** (after the CSV load)
+2. **找到 "Config details" cell**（位於 CSV 載入之後）
 
-3. **Replace the `config_name` line** with this or comment it out and uncomment the custom config cell:
+3. **將 `config_name` 那行替換成**下列內容，或把它註解後啟用 custom config cell：
 
 ```python
 # Option A: Using custom configuration
@@ -20,28 +20,28 @@ ffn_hidden_dims_str = str(ffn_hidden_dims)
 config_name = "Custom 0.9B (26-layer)"
 ```
 
-4. **Run all subsequent cells** as normal
+4. **照常執行後續所有 cells**
 
-5. **Result**: 0.95B model that fits in 4-6GB RAM with 4-bit quantization
+5. **結果**：得到搭配 4-bit quantization 可放入 4-6GB RAM 的 0.95B 模型
 
 ---
 
-## Detailed Comparison Table
+## 詳細 Comparison Table
 
 | Config | Layers | Parameters | MMLU Est. | 4-bit Size | Best For |
 |--------|--------|-----------|----------|-----------|----------|
-| **0.5B (20L)** | 20 | 0.52B | 40-42% | ~0.9 GB | Web, ultra-light mobile |
-| **0.7B (23L)** | 23 | 0.71B | 44-46% | ~1.1 GB | Light mobile (4GB) |
-| **0.9B (26L)** | 26 | 0.95B | 46-48% | ~1.5 GB | **Mobile (4-6GB)** ✓ |
-| **1.3B (28L)** | 28 | 1.32B | 48-50% | ~2.1 GB | Mobile (6-8GB) |
-| **E2B (30L)** | 30 | 1.91B | 50.9% | ~2.9 GB | Mobile (8GB+) |
+| **0.5B (20L)** | 20 | 0.52B | 40-42% | ~0.9 GB | Web、超輕量 mobile |
+| **0.7B (23L)** | 23 | 0.71B | 44-46% | ~1.1 GB | 輕量 mobile（4GB） |
+| **0.9B (26L)** | 26 | 0.95B | 46-48% | ~1.5 GB | **Mobile（4-6GB）** ✓ |
+| **1.3B (28L)** | 28 | 1.32B | 48-50% | ~2.1 GB | Mobile（6-8GB） |
+| **E2B (30L)** | 30 | 1.91B | 50.9% | ~2.9 GB | Mobile（8GB+） |
 | **1.5B (30L)** | 30 | 1.51B | 49-51% | ~2.3 GB | High-end mobile |
 
 ---
 
 ## Step-by-Step Implementation
 
-### Step 1: Prepare Environment
+### Step 1: 準備環境
 
 ```bash
 # In Google Colab or local environment with GPU
@@ -52,7 +52,7 @@ from huggingface_hub import notebook_login
 notebook_login()
 ```
 
-### Step 2: Set Model Source
+### Step 2: 設定 Model Source
 
 ```python
 # In the "Import and Export Options" cell
@@ -61,9 +61,9 @@ local_output_path = "my_0_9b_model"
 push_hf_repo_id = "username/gemma-3n-0-9b"  # Your HF repo
 ```
 
-### Step 3: Apply 0.9B Configuration
+### Step 3: 套用 0.9B Configuration
 
-**In the "Config details" cell**, uncomment and set:
+**在 "Config details" cell 中**，取消註解並設定：
 
 ```python
 # Custom config for 0.9B model
@@ -84,7 +84,7 @@ print(f"Final Layers: {35 - len(layers_to_skip)}")
 print(f"FFN Dims (first 10): {ffn_hidden_dims[:10]}")
 ```
 
-### Step 4: Run Slicing Pipeline
+### Step 4: 執行 Slicing Pipeline
 
 ```python
 # Run cells in order:
@@ -97,7 +97,7 @@ print(f"FFN Dims (first 10): {ffn_hidden_dims[:10]}")
 # 7. Save final model
 ```
 
-### Step 5: Push to Hugging Face (Optional)
+### Step 5: 推送到 Hugging Face（選用）
 
 ```python
 # Push sliced model to your Hugging Face repo
@@ -111,7 +111,7 @@ api.upload_folder(
 )
 ```
 
-### Step 6: Load and Test
+### Step 6: 載入並測試
 
 ```python
 from transformers import AutoModelForCausalLM, BitsAndBytesConfig
@@ -130,9 +130,9 @@ print(f"Model parameters: {model.num_parameters():,}")
 
 ---
 
-## Configuration Presets for Different Scenarios
+## 不同情境的 Configuration Presets
 
-### Scenario 1: Mobile App (4GB RAM)
+### Scenario 1: Mobile App（4GB RAM）
 
 ```python
 # Best: 0.9B with 4-bit quantization
@@ -145,8 +145,9 @@ ffn_hidden_dims = [2048*3]*10 + [int(2048*3.5)]*9 + [2048*4]*7
 # - Memory during inference: 2.5-3.5 GB
 ```
 
-### Scenario 2: Web Browser (Client-side)
+### Scenario 2: Web Browser（Client-side）
 
+```python
 # Best: 0.5B with extreme quantization
 layers_to_skip = [12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
 ffn_hidden_dims = [2048*2]*8 + [int(2048*2.5)]*7 + [2048*3]*5
@@ -155,8 +156,9 @@ ffn_hidden_dims = [2048*2]*8 + [int(2048*2.5)]*7 + [2048*3]*5
 # - Model size: ~0.8-0.9 GB
 # - Inference in browser (ONNX/WebGPU)
 # - Fast first response
+```
 
-### Scenario 3: Edge Device (6GB RAM, prefer accuracy)
+### Scenario 3: Edge Device（6GB RAM，偏好準確度）
 
 ```python
 # Best: 1.3B with 4-bit
@@ -171,44 +173,44 @@ ffn_hidden_dims = [2048*3]*10 + [int(2048*3.5)]*9 + [2048*4]*9
 
 ---
 
-## Understanding FFN Dimension Strategy
+## 理解 FFN Dimension 策略
 
-The FFN (Feed-Forward Network) dimensions control model capacity at each layer:
+FFN（Feed-Forward Network）dimension 會控制每一層的模型容量：
 
 ```
 FFN_dim = 2048 * multiplier
 
-2048 * 2   = 4,096    (very compact, low capacity)
-2048 * 2.5 = 5,120    (compact)
-2048 * 3   = 6,144    (standard light)
-2048 * 3.5 = 7,168    (medium)
-2048 * 4   = 8,192    (full capacity)
+2048 * 2   = 4,096    (非常精簡，容量低)
+2048 * 2.5 = 5,120    (精簡)
+2048 * 3   = 6,144    (標準輕量)
+2048 * 3.5 = 7,168    (中等)
+2048 * 4   = 8,192    (完整容量)
 ```
 
-### Why This Distribution?
+### 為什麼這樣分布？
 
 ```
-Early layers (0-9):   Lower capacity (6,144)
-  → Capture basic linguistic features
-  → Can reuse in inference
+前段 layers（0-9）：   較低容量（6,144）
+  → 捕捉基礎語言特徵
+  → 可重用於 inference
 
-Middle layers (10-18): Medium capacity (7,168)
-  → Process semantic content
-  → Balance efficiency and modeling
+中段 layers（10-18）： 中等容量（7,168）
+  → 處理語意內容
+  → 在效率與建模能力之間取得平衡
 
-Late layers (19-25):  Full capacity (8,192)
-  → Critical for output quality
-  → Global layers with KV sharing
-  → Must preserve for performance
+後段 layers（19-25）： 完整容量（8,192）
+  → 對輸出品質至關重要
+  → 屬於具 KV sharing 的 global layers
+  → 必須保留以維持效能
 ```
 
-**Rule of thumb**: Later layers are more important for output quality, so keep them at full capacity.
+**經驗法則**：越後面的 layers 對輸出品質越重要，因此應保留完整容量。
 
 ---
 
 ## Inference Optimization Tips
 
-### For Mobile Deployment
+### 針對 Mobile Deployment
 
 ```python
 # 1. Use 4-bit quantization
@@ -233,7 +235,7 @@ max_tokens = 512
 model.config.attn_implementation = "flash_attention_2"
 ```
 
-### For Web Deployment
+### 針對 Web Deployment
 
 ```python
 # 1. Convert to ONNX or TensorFlow
@@ -248,22 +250,22 @@ model.config.attn_implementation = "flash_attention_2"
 
 ---
 
-## Performance Expectations
+## 效能預期
 
-### Accuracy (MMLU benchmark)
+### 準確度（MMLU benchmark）
 
 ```
 Full E4B (3.98B):  62.30%
 Full E2B (1.91B):  50.90%
 ─────────────────────────
-Custom 1.5B:       49-51%  ← Best tradeoff
+Custom 1.5B:       49-51%  ← 最佳權衡
 Custom 1.3B:       48-50%
-Custom 0.9B:       46-48%  ← Recommended for 4-6GB
+Custom 0.9B:       46-48%  ← 建議用於 4-6GB
 Custom 0.7B:       44-46%
-Custom 0.5B:       40-42%  ← Web-only
+Custom 0.5B:       40-42%  ← 適合 web-only
 ```
 
-### Inference Speed (Tokens/sec, single GPU)
+### Inference Speed（Tokens/sec，單張 GPU）
 
 ```
 Device: NVIDIA L4 GPU (Colab free tier)
@@ -279,7 +281,7 @@ Custom 0.9B (quantized): 5-15 tokens/sec
 Custom 0.5B (quantized): 10-25 tokens/sec
 ```
 
-### Memory Usage
+### 記憶體使用量
 
 ```
 FP32 (full precision):
@@ -292,65 +294,65 @@ INT8:
   0.9B: ~0.9 GB
 
 INT4 / NF4:
-  0.9B: ~0.5-0.7 GB (params) → ~1.5 GB (total)  ← Recommended for mobile
+  0.9B: ~0.5-0.7 GB (params) → ~1.5 GB (total)  ← 建議用於 mobile
 ```
 
 ---
 
-## Troubleshooting
+## 疑難排解
 
-### Issue: "Layers X and Y are reserved" error
+### 問題："Layers X and Y are reserved" error
 
-**Solution**: Don't skip the last 2 layers (KV shared layers)
+**解法**：不要 skip 最後 2 個 layers（KV shared layers）
 ```python
-# ✓ Correct
-layers_to_skip = [19, 20, 21, 22, 23, 24, 25, 26, 27]  # Keeps 0-18 + 28-34
+# ✓ 正確
+layers_to_skip = [19, 20, 21, 22, 23, 24, 25, 26, 27]  # 保留 0-18 + 28-34
 
-# ✗ Wrong
-layers_to_skip = [19, 20, 21, 22, 23, 24, 33, 34]  # Skips global layers!
+# ✗ 錯誤
+layers_to_skip = [19, 20, 21, 22, 23, 24, 33, 34]  # Skip 到 global layers 了
 ```
 
-### Issue: FFN dimensions length mismatch
+### 問題：FFN dimensions 長度不符
 
-**Solution**: Ensure length matches final layer count
+**解法**：確保長度與最終 layer 數一致
 ```python
-final_layers = 35 - len(layers_to_skip)  # Should be 26
-ffn_dims = [2048*3]*10 + [int(2048*3.5)]*9 + [2048*4]*7  # Length must be 26
+final_layers = 35 - len(layers_to_skip)  # 應為 26
+ffn_dims = [2048*3]*10 + [int(2048*3.5)]*9 + [2048*4]*7  # 長度必須是 26
 
-assert len(ffn_dims) == final_layers  # Verify
+assert len(ffn_dims) == final_layers  # 驗證
 ```
 
-### Issue: Out of memory during slicing
+### 問題：Slicing 過程中 out of memory
 
-**Solution**: 
-- Run on Google Colab (free GPU)
-- Or use CPU with sufficient RAM (16GB+)
-- Model doesn't load into memory, only processes checkpoints
+**解法**：
+- 在 Google Colab 上執行（免費 GPU）
+- 或改用具足夠 RAM（16GB+）的 CPU
+- 模型不會整個載入記憶體，而是逐步處理 checkpoints
 
-### Issue: Sliced model loads but has poor quality
+### 問題：Sliced model 可以載入，但品質很差
 
-**Solution**: Check FFN dimension distribution
+**解法**：檢查 FFN dimension 的分布
 ```python
-# Better: Keep later layers at full capacity
+# Better: 後段 layers 保留完整容量
 ffn = [int(2048*2.5)]*10 + [int(2048*3.5)]*8 + [2048*4]*8  # ✓
 
-# Worse: Uniform low capacity
-ffn = [int(2048*2.5)]*26  # ✗ (poor quality)
+# Worse: 全部使用均一低容量
+ffn = [int(2048*2.5)]*26  # ✗（品質差）
 ```
 
 ---
 
-## Next Steps
+## 下一步
 
-1. **Test the 0.9B configuration** above using MatFormer Lab
-2. **Evaluate on your target device** (measure inference speed, memory)
-3. **Fine-tune if needed** using LoRA on your domain data
-4. **Deploy** with 4-bit quantization for mobile
-5. **Monitor** performance and iterate
+1. 使用上述 0.9B configuration 在 MatFormer Lab 中測試
+2. 在目標裝置上評估（量測 inference speed、memory）
+3. 視需要使用 LoRA 在你的 domain data 上微調
+4. 以 4-bit quantization 部署到 mobile
+5. 持續監控效能並迭代
 
 ---
 
-## Additional Resources
+## 其他資源
 
 - **MatFormer Paper**: https://arxiv.org/abs/2310.07707
 - **Gemma 3n Blog**: https://developers.googleblog.com/en/introducing-gemma-3n-developer-guide
@@ -360,10 +362,9 @@ ffn = [int(2048*2.5)]*26  # ✗ (poor quality)
 
 ---
 
-## Questions or Issues?
+## 問題或需求？
 
-If these configurations don't work for your use case:
-1. Check the [custom_slicing_configs.py](./custom_slicing_configs.py) for programmatic validation
-2. Refer to the [detailed analysis](./RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md)
-3. File an issue with your device specs and constraints
-
+如果這些 configurations 不符合你的使用情境：
+1. 先查看 [custom_slicing_configs.py](./custom_slicing_configs.py) 做程式化驗證
+2. 參考[詳細分析文件](./RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md)
+3. 連同裝置規格與限制提交 issue

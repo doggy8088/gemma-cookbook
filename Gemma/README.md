@@ -1,122 +1,121 @@
 # Gemma
 
-This folder is organized into several categories, each focusing on a speicific aspect of working with Gemma models:
+這個資料夾依照主題分成數個分類，每一類都聚焦於使用 Gemma 模型的特定面向：
 
-* [Inference and serving](#inference-and-serving) : How to load, run and deploy Gemma models for inference
-* [Prompting](#prompting) : Explore various prompting techniques
-* [RAG (Retrieval Augmented Generation)](#rag) : How to build RAG systems with Gemma
-* [Finetuning](#finetuning) : Dive into finetuning Gemma models for specific tasks and domains
-* [Alignment](#alignment) : Techniques for aligning Gemma models
-* [Evaluation](#evaluation) : How to evaluate Gemma models
-* [Agentic AI](#agentic-ai) : How to build an intelligent agents using Gemma models
+* [推論與服務部署](#推論與服務部署) : 如何載入、執行與部署 Gemma 模型以進行推論
+* [提示設計](#提示設計) : 探索各種 prompt 使用技巧
+* [RAG（Retrieval Augmented Generation）](#ragretrieval-augmented-generation) : 如何使用 Gemma 建立 RAG 系統
+* [微調](#微調) : 深入了解如何針對特定任務與領域微調 Gemma 模型
+* [對齊](#對齊) : Gemma 模型的對齊技巧
+* [評估](#評估) : 如何評估 Gemma 模型
+* [Agentic AI](#agentic-ai) : 如何使用 Gemma 模型打造智慧代理
 
-## Inference and serving
+## 推論與服務部署
 
 | Notebook Name | Description |
 :------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [[Gemma_1]Basics_with_HF.ipynb]([Gemma_1]Basics_with_HF.ipynb)                                                       | Load, run, finetune and deploy Gemma using [Hugging Face](https://huggingface.co/).                                                                                                     |
-| [[Gemma_1]Common_use_cases.ipynb]([Gemma_1]Common_use_cases.ipynb)                                                       | Illustrate some common use cases for Gemma.                                                                                                    |
-| [[Gemma_1]Inference with Flax/NNX](https://flax.readthedocs.io/en/latest/guides/gemma.html)                             | Gemma 1 inference with Flax/NNX framework (linking to Flax documentation)                                                                                                               |
-| [[Gemma_1]Inference_on_TPU.ipynb]([Gemma_1]Inference_on_TPU.ipynb)                                                   | Basic inference of Gemma with JAX/Flax on TPU.                                                                                                                                          |
-| [[Gemma_1]Using_with_Ollama.ipynb]([Gemma_1]Using_with_Ollama.ipynb)                                                                 | Run Gemma models using [Ollama](https://www.ollama.com/).  |
-| [[Gemma_1]Using_with_OneTwo.ipynb]([Gemma_1]Using_with_OneTwo.ipynb)                                                     | Integrate Gemma with [Google OneTwo](https://github.com/google-deepmind/onetwo).                                                                                                        |
-| [[Gemma_1]data_parallel_inference_in_jax_tpu.ipynb]([Gemma_1]data_parallel_inference_in_jax_tpu.ipynb)               | Parallel inference of Gemma with JAX/Flax on TPU.                                                                                                                                       |
-| [[Gemma_2]Constrained_generation.ipynb]([Gemma_2]Constrained_generation.ipynb)                             | Constrained generation with Gemma models using [LlamaCpp](https://github.com/abetlen/llama-cpp-python/) and [Guidance](https://github.com/guidance-ai/guidance/tree/main/).             |
-| [[Gemma_2]DeFi_Protocol_Development.ipynb]([Gemma_2]DeFi_Protocol_Development.ipynb) | Explore DeFi protocol development (ERC-20 tokens, AMM mechanics, staking patterns) using Gemma 2. |
-| [[Gemma_2]Deploy_in_Vertex_AI.ipynb]([Gemma_2]Deploy_in_Vertex_AI.ipynb)                                             | Deploy a Gemma model using [Vertex AI](https://cloud.google.com/vertex-ai).                                                                                                             |
-| [[Gemma_2]Deploy_with_vLLM.ipynb]([Gemma_2]Deploy_with_vLLM.ipynb)                                                               | Deploy a Gemma model using [vLLM](https://github.com/vllm-project/vllm).                                                                                                                |
-| [[Gemma_2]Game_Design_Brainstorming.ipynb]([Gemma_2]Game_Design_Brainstorming.ipynb)                                             | Use Gemma to brainstorm ideas during game design using Keras.                                                                                                                           |
-| [[Gemma_2]Gradio_Chatbot.ipynb]([Gemma_2]Gradio_Chatbot.ipynb)                                                       | Building a Chatbot with Gemma and Gradio                                                                                                                                                |
-| [[Gemma_2]Guess_the_word.ipynb]([Gemma_2]Guess_the_word.ipynb)                                                                   | Play a word guessing game with Gemma using Keras.                                                                                                                                       |
-| [[Gemma_2]Keras_Quickstart.ipynb]([Gemma_2]Keras_Quickstart.ipynb)                                               | Gemma 2 pre-trained 9B model quickstart tutorial with Keras.                                                                                                                            |
-| [[Gemma_2]Keras_Quickstart_Chat.ipynb]([Gemma_2]Keras_Quickstart_Chat.ipynb)                                     | Gemma 2 instruction-tuned 9B model quickstart tutorial with Keras. Referenced in this [blog](https://developers.googleblog.com/en/fine-tuning-gemma-2-with-keras-hugging-face-update/). |
-| [[Gemma_2]Smart_Contract_Auditing.ipynb]([Gemma_2]Smart_Contract_Auditing.ipynb) | Audit and refactor Solidity smart contracts using Gemma 2. |
-| [[Gemma_2]Synthetic_data_generation.ipynb]([Gemma_2]Synthetic_data_generation.ipynb)                   | Synthetic data generation with Gemma 2                                                                                                                                                  |
-| [[Gemma_2]Using_Gemini_and_Gemma_with_RouteLLM.ipynb]([Gemma_2]Using_Gemini_and_Gemma_with_RouteLLM.ipynb)                       | Route Gemma and Gemini models using [RouteLLM](https://github.com/lm-sys/RouteLLM/).                                                                                                    |
-| [[Gemma_2]Using_with_LLM_Comparator.ipynb](Gemma/[Gemma_2]Using_with_LLM_Comparator.ipynb) | Compare Gemma with another LLM using [LLM Comparator](https://github.com/pair-code/llm-comparator/). |
-| [[Gemma_2]Using_with_Langfun_and_LlamaCpp.ipynb]([Gemma_2]Using_with_Langfun_and_LlamaCpp.ipynb)                                 | Leverage [Langfun](https://github.com/google/langfun) to seamlessly integrate natural language with programming using Gemma 2 and [LlamaCpp](https://github.com/ggerganov/llama.cpp).   |
-| [[Gemma_2]Using_with_Langfun_and_LlamaCpp_Python_Bindings.ipynb]([Gemma_2]Using_with_Langfun_and_LlamaCpp_Python_Bindings.ipynb) | Leverage [Langfun](https://github.com/google/langfun) for smooth language-program interaction with Gemma 2 and [llama-cpp-python](https://github.com/abetlen/llama-cpp-python).         |
-| [[Gemma_2]Using_with_LlamaCpp.ipynb]([Gemma_2]Using_with_LlamaCpp.ipynb)                                             | Run Gemma models using [LlamaCpp](https://github.com/abetlen/llama-cpp-python/).                                                                                                        |
-| [[Gemma_2]Using_with_Llamafile.ipynb]([Gemma_2]Using_with_Llamafile.ipynb)                                           | Run Gemma models using [Llamafile](https://github.com/Mozilla-Ocho/llamafile/).                                                                                                         |
-| [[Gemma_2]Using_with_LocalGemma.ipynb]([Gemma_2]Using_with_LocalGemma.ipynb)                                         | Run Gemma models using [Local Gemma](https://github.com/huggingface/local-gemma/).                                                                                                      |
-| [[Gemma_2]Using_with_Mesop.ipynb]([Gemma_2]Using_with_Mesop.ipynb)                                                       | Integrate Gemma with [Google Mesop](https://google.github.io/mesop/).                                                                                                                   |
-| [[Gemma_2]Using_with_Ollama_Python.ipynb]([Gemma_2]Using_with_Ollama_Python.ipynb)                                                   | Run Gemma models using [Ollama Python library](https://github.com/ollama/ollama-python).                                                                                                                              |
-| [[Gemma_2]Using_with_SGLang.ipynb]([Gemma_2]Using_with_SGLang.ipynb)                                                 | Run Gemma models using [SGLang](https://github.com/sgl-project/sglang/).                                                                                                                |
-| [[Gemma_2]Using_with_Xinference.ipynb]([Gemma_2]Using_with_Xinference.ipynb)                                         | Run Gemma models using [Xinference](https://github.com/xorbitsai/inference/).                                                                                                           |
-| [[Gemma_2]Using_with_mistral_rs.ipynb]([Gemma_2]Using_with_mistral_rs.ipynb)                                         | Run Gemma models using [mistral.rs](https://github.com/EricLBuehler/mistral.rs/).                                                                                                       |
+| [[Gemma_1]Basics_with_HF.ipynb]([Gemma_1]Basics_with_HF.ipynb) | 使用 [Hugging Face](https://huggingface.co/) 載入、執行、微調與部署 Gemma。 |
+| [[Gemma_1]Common_use_cases.ipynb]([Gemma_1]Common_use_cases.ipynb) | 說明 Gemma 的一些常見使用案例。 |
+| [[Gemma_1]Inference with Flax/NNX](https://flax.readthedocs.io/en/latest/guides/gemma.html) | 使用 Flax/NNX framework 對 Gemma 1 進行推論（連到 Flax 文件）。 |
+| [[Gemma_1]Inference_on_TPU.ipynb]([Gemma_1]Inference_on_TPU.ipynb) | 使用 JAX/Flax 在 TPU 上對 Gemma 進行基本推論。 |
+| [[Gemma_1]Using_with_Ollama.ipynb]([Gemma_1]Using_with_Ollama.ipynb) | 使用 [Ollama](https://www.ollama.com/) 執行 Gemma 模型。 |
+| [[Gemma_1]Using_with_OneTwo.ipynb]([Gemma_1]Using_with_OneTwo.ipynb) | 將 Gemma 與 [Google OneTwo](https://github.com/google-deepmind/onetwo) 整合。 |
+| [[Gemma_1]data_parallel_inference_in_jax_tpu.ipynb]([Gemma_1]data_parallel_inference_in_jax_tpu.ipynb) | 使用 JAX/Flax 在 TPU 上進行 Gemma 的平行推論。 |
+| [[Gemma_2]Constrained_generation.ipynb]([Gemma_2]Constrained_generation.ipynb) | 使用 [LlamaCpp](https://github.com/abetlen/llama-cpp-python/) 與 [Guidance](https://github.com/guidance-ai/guidance/tree/main/) 對 Gemma 模型進行 constrained generation。 |
+| [[Gemma_2]DeFi_Protocol_Development.ipynb]([Gemma_2]DeFi_Protocol_Development.ipynb) | 使用 Gemma 2 探索 DeFi protocol 開發（ERC-20 tokens、AMM mechanics、staking patterns）。 |
+| [[Gemma_2]Deploy_in_Vertex_AI.ipynb]([Gemma_2]Deploy_in_Vertex_AI.ipynb) | 使用 [Vertex AI](https://cloud.google.com/vertex-ai) 部署 Gemma 模型。 |
+| [[Gemma_2]Deploy_with_vLLM.ipynb]([Gemma_2]Deploy_with_vLLM.ipynb) | 使用 [vLLM](https://github.com/vllm-project/vllm) 部署 Gemma 模型。 |
+| [[Gemma_2]Game_Design_Brainstorming.ipynb]([Gemma_2]Game_Design_Brainstorming.ipynb) | 在遊戲設計過程中使用 Keras 與 Gemma 進行點子發想。 |
+| [[Gemma_2]Gradio_Chatbot.ipynb]([Gemma_2]Gradio_Chatbot.ipynb) | 使用 Gemma 與 Gradio 建立 chatbot。 |
+| [[Gemma_2]Guess_the_word.ipynb]([Gemma_2]Guess_the_word.ipynb) | 使用 Keras 與 Gemma 玩猜單字遊戲。 |
+| [[Gemma_2]Keras_Quickstart.ipynb]([Gemma_2]Keras_Quickstart.ipynb) | 使用 Keras 的 Gemma 2 預訓練 9B 模型快速開始教學。 |
+| [[Gemma_2]Keras_Quickstart_Chat.ipynb]([Gemma_2]Keras_Quickstart_Chat.ipynb) | 使用 Keras 的 Gemma 2 instruction-tuned 9B 模型快速開始教學。本文也在這篇 [blog](https://developers.googleblog.com/en/fine-tuning-gemma-2-with-keras-hugging-face-update/) 中被引用。 |
+| [[Gemma_2]Smart_Contract_Auditing.ipynb]([Gemma_2]Smart_Contract_Auditing.ipynb) | 使用 Gemma 2 稽核並重構 Solidity smart contracts。 |
+| [[Gemma_2]Synthetic_data_generation.ipynb]([Gemma_2]Synthetic_data_generation.ipynb) | 使用 Gemma 2 進行 synthetic data generation |
+| [[Gemma_2]Using_Gemini_and_Gemma_with_RouteLLM.ipynb]([Gemma_2]Using_Gemini_and_Gemma_with_RouteLLM.ipynb) | 使用 [RouteLLM](https://github.com/lm-sys/RouteLLM/) 路由 Gemma 與 Gemini 模型。 |
+| [[Gemma_2]Using_with_LLM_Comparator.ipynb](Gemma/[Gemma_2]Using_with_LLM_Comparator.ipynb) | 使用 [LLM Comparator](https://github.com/pair-code/llm-comparator/) 比較 Gemma 與其他 LLM。 |
+| [[Gemma_2]Using_with_Langfun_and_LlamaCpp.ipynb]([Gemma_2]Using_with_Langfun_and_LlamaCpp.ipynb) | 使用 [Langfun](https://github.com/google/langfun) 將自然語言與程式設計流暢整合，並搭配 Gemma 2 與 [LlamaCpp](https://github.com/ggerganov/llama.cpp)。 |
+| [[Gemma_2]Using_with_Langfun_and_LlamaCpp_Python_Bindings.ipynb]([Gemma_2]Using_with_Langfun_and_LlamaCpp_Python_Bindings.ipynb) | 使用 [Langfun](https://github.com/google/langfun) 結合 Gemma 2 與 [llama-cpp-python](https://github.com/abetlen/llama-cpp-python)，打造順暢的語言與程式互動。 |
+| [[Gemma_2]Using_with_LlamaCpp.ipynb]([Gemma_2]Using_with_LlamaCpp.ipynb) | 使用 [LlamaCpp](https://github.com/abetlen/llama-cpp-python/) 執行 Gemma 模型。 |
+| [[Gemma_2]Using_with_Llamafile.ipynb]([Gemma_2]Using_with_Llamafile.ipynb) | 使用 [Llamafile](https://github.com/Mozilla-Ocho/llamafile/) 執行 Gemma 模型。 |
+| [[Gemma_2]Using_with_LocalGemma.ipynb]([Gemma_2]Using_with_LocalGemma.ipynb) | 使用 [Local Gemma](https://github.com/huggingface/local-gemma/) 執行 Gemma 模型。 |
+| [[Gemma_2]Using_with_Mesop.ipynb]([Gemma_2]Using_with_Mesop.ipynb) | 將 Gemma 與 [Google Mesop](https://google.github.io/mesop/) 整合。 |
+| [[Gemma_2]Using_with_Ollama_Python.ipynb]([Gemma_2]Using_with_Ollama_Python.ipynb) | 使用 [Ollama Python library](https://github.com/ollama/ollama-python) 執行 Gemma 模型。 |
+| [[Gemma_2]Using_with_SGLang.ipynb]([Gemma_2]Using_with_SGLang.ipynb) | 使用 [SGLang](https://github.com/sgl-project/sglang/) 執行 Gemma 模型。 |
+| [[Gemma_2]Using_with_Xinference.ipynb]([Gemma_2]Using_with_Xinference.ipynb) | 使用 [Xinference](https://github.com/xorbitsai/inference/) 執行 Gemma 模型。 |
+| [[Gemma_2]Using_with_mistral_rs.ipynb]([Gemma_2]Using_with_mistral_rs.ipynb) | 使用 [mistral.rs](https://github.com/EricLBuehler/mistral.rs/) 執行 Gemma 模型。 |
 | [[Gemma_2]for_Japan_using_Transformers_and_PyTorch.ipynb]([Gemma_2]for_Japan_using_Transformers_and_PyTorch.ipynb) | [Gemma 2 for Japan](https://blog.google/intl/ja-jp/company-news/technology/gemma-2-2b/) |
-| [[Gemma_2]on_Groq.ipynb]([Gemma_2]on_Groq.ipynb)                                                                   | Leverage the free Gemma 2 9B IT model hosted on [Groq](https://groq.com/) (super fast speed).                                                                                           |
-| [[Gemma_3]Inference_images_and_videos.ipynb]([Gemma_3]Inference_images_and_videos.ipynb)                                                                                    | Inference on images and videos using Gemma 3 4B IT model.                                                                                                                                                 |
-| [[Gemma_3]Using_with_Ollama_Python_Inference_with_Images.ipynb]([Gemma_3]Using_with_Ollama_Python_Inference_with_Images.ipynb)                                                                 | Run inference with images on Gemma 3 using [Ollama Python library](https://github.com/ollama/ollama-python).  |
-| [[Gemma_3]Using_with_Transformersjs.ipynb]([Gemma_3]Using_with_Transformersjs.ipynb)                                                         | Run Gemma 3 with [Transformers.js](https://github.com/huggingface/transformers.js).                                                                                                                                      |
-| [[Gemma_3]Activation_Hacking.ipynb]([Gemma_3]Activation_Hacking.ipynb)                                                         | Examine and modify internal states, including the residual stream, MLP activations, and attention mechanisms. |
-| [[Gemma_3]Chess.ipynb]([Gemma_3]Chess.ipynb)                                                         | Gemma \| Chess: Learn, Analyze, and Discover a New Dimension! |
-| [[Gemma_3]Gradio_LlamaCpp_Chatbot.ipynb]([Gemma_3]Gradio_LlamaCpp_Chatbot.ipynb)                                                         | Building a Chatbot with Gemma 3 QAT text model using Llama.cpp and Gradio. |
-| [[Gemma_3]Speculative_Decoding.ipynb]([Gemma_3]Speculative_Decoding.ipynb)                                                         | Achieve 2-3x inference speedup for Gemma models using speculative decoding. |
-| [[Gemma_3]Visual_Document_Extraction_to_JSON.ipynb]([Gemma_3]Visual_Document_Extraction_to_JSON.ipynb) | Demonstrate zero-shot OCR and structured JSON data extraction from images using the natively multimodal Gemma 3 4B-IT model. |
-| [[Gemma_3n]Audio_understanding_with_HF.ipynb]([Gemma_3n]Audio_understanding_with_HF.ipynb)                           | Run Gemma 3n with audio input |
-| [[Gemma_3n]Multimodal_understanding_with_HF.ipynb]([Gemma_3n]Multimodal_understanding_with_HF.ipynb)                 | Run Gemma 3n with image + audio input |
-| [[Gemma_3n]MatFormer_Lab.ipynb]([Gemma_3n]MatFormer_Lab.ipynb)                                                       | Run Gemma 3n with MatFormers and Mix-n-Match |
-| [[Gemma_3n]Using_with_Transformersjs.ipynb]([Gemma_3n]Using_with_Transformersjs.ipynb)                                                       | Run Gemma 3n with [Transformers.js](https://github.com/huggingface/transformers.js). |
+| [[Gemma_2]on_Groq.ipynb]([Gemma_2]on_Groq.ipynb) | 使用由 [Groq](https://groq.com/) 託管的免費 Gemma 2 9B IT 模型（速度非常快）。 |
+| [[Gemma_3]Inference_images_and_videos.ipynb]([Gemma_3]Inference_images_and_videos.ipynb) | 使用 Gemma 3 4B IT 模型對圖片與影片進行推論。 |
+| [[Gemma_3]Using_with_Ollama_Python_Inference_with_Images.ipynb]([Gemma_3]Using_with_Ollama_Python_Inference_with_Images.ipynb) | 使用 [Ollama Python library](https://github.com/ollama/ollama-python) 對 Gemma 3 進行圖片推論。 |
+| [[Gemma_3]Using_with_Transformersjs.ipynb]([Gemma_3]Using_with_Transformersjs.ipynb) | 使用 [Transformers.js](https://github.com/huggingface/transformers.js) 執行 Gemma 3。 |
+| [[Gemma_3]Activation_Hacking.ipynb]([Gemma_3]Activation_Hacking.ipynb) | 檢查並修改內部狀態，包括 residual stream、MLP activations 與 attention mechanisms。 |
+| [[Gemma_3]Chess.ipynb]([Gemma_3]Chess.ipynb) | Gemma \| Chess：學習、分析並探索全新維度。 |
+| [[Gemma_3]Gradio_LlamaCpp_Chatbot.ipynb]([Gemma_3]Gradio_LlamaCpp_Chatbot.ipynb) | 使用 Llama.cpp 與 Gradio，以 Gemma 3 QAT text model 建立 chatbot。 |
+| [[Gemma_3]Speculative_Decoding.ipynb]([Gemma_3]Speculative_Decoding.ipynb) | 使用 speculative decoding 讓 Gemma 模型推論速度提升 2 到 3 倍。 |
+| [[Gemma_3]Visual_Document_Extraction_to_JSON.ipynb]([Gemma_3]Visual_Document_Extraction_to_JSON.ipynb) | 使用原生多模態的 Gemma 3 4B-IT 模型，示範從圖片進行 zero-shot OCR 與結構化 JSON 資料擷取。 |
+| [[Gemma_3n]Audio_understanding_with_HF.ipynb]([Gemma_3n]Audio_understanding_with_HF.ipynb) | 使用音訊輸入執行 Gemma 3n |
+| [[Gemma_3n]Multimodal_understanding_with_HF.ipynb]([Gemma_3n]Multimodal_understanding_with_HF.ipynb) | 使用圖片與音訊輸入執行 Gemma 3n |
+| [[Gemma_3n]MatFormer_Lab.ipynb]([Gemma_3n]MatFormer_Lab.ipynb) | 使用 MatFormers 與 Mix-n-Match 執行 Gemma 3n |
+| [[Gemma_3n]Using_with_Transformersjs.ipynb]([Gemma_3n]Using_with_Transformersjs.ipynb) | 使用 [Transformers.js](https://github.com/huggingface/transformers.js) 執行 Gemma 3n。 |
 
-## Prompting
+## 提示設計
 | Notebook Name | Description |
 | :------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [[Gemma_1]Advanced_Prompting_Techniques.ipynb]([Gemma_1]Advanced_Prompting_Techniques.ipynb)                                     | Illustrate advanced prompting techniques with Gemma.                                                                                                                                    |
-| [[Gemma_2]LangChain_chaining.ipynb]([Gemma_2]LangChain_chaining.ipynb)                                                           | Illustrate LangChain chaining  with Gemma.                                                                                                                                              |
-| [[Gemma_2]Prompt_chaining.ipynb]([Gemma_2]Prompt_chaining.ipynb)                                                                 | Illustrate prompt chaining and iterative generation with Gemma.                                                                                                                         |
-| [[Gemma_3]In-context_Learning.ipynb]([Gemma_3]In-context_Learning.ipynb)                                                         | Demonstrate in-context learning with Gemma 3 long context window |
+| [[Gemma_1]Advanced_Prompting_Techniques.ipynb]([Gemma_1]Advanced_Prompting_Techniques.ipynb) | 說明 Gemma 的進階 prompt 技巧。 |
+| [[Gemma_2]LangChain_chaining.ipynb]([Gemma_2]LangChain_chaining.ipynb) | 說明如何搭配 Gemma 使用 LangChain chaining。 |
+| [[Gemma_2]Prompt_chaining.ipynb]([Gemma_2]Prompt_chaining.ipynb) | 說明如何使用 Gemma 進行 prompt chaining 與迭代式生成。 |
+| [[Gemma_3]In-context_Learning.ipynb]([Gemma_3]In-context_Learning.ipynb) | 示範如何利用 Gemma 3 的長 context window 進行 in-context learning |
 
-## RAG
+## RAG（Retrieval Augmented Generation）
 | Notebook Name | Description |
 | :------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [[Gemma_1]Minimal_RAG.ipynb]([Gemma_1]Minimal_RAG.ipynb)                                                                         | Minimal example of building a RAG system with Gemma using [Google UniSim](https://github.com/google/unisim) and [Hugging Face](https://huggingface.co/).                                |
-| [[Gemma_1]RAG_with_ChromaDB.ipynb]([Gemma_1]RAG_with_ChromaDB.ipynb)                                                             | Build a Retrieval Augmented Generation (RAG) system with Gemma using [ChromaDB](https://www.trychroma.com/) and [Hugging Face](https://huggingface.co/).                                |
-| [[Gemma_2]RAG_LlamaIndex.ipynb]([Gemma_2]RAG_LlamaIndex.ipynb)                                                       | RAG example with [LlamaIndex](https://www.llamaindex.ai/) using Gemma.                                                                                                                  |
-| [[Gemma_2]RAG_PDF_Search_in_multiple_documents_on_Colab.ipynb]([Gemma_2]RAG_PDF_Search_in_multiple_documents_on_Colab.ipynb)     | RAG PDF Search in multiple documents using Gemma 2 2B on Google Colab.                                                                                                                  |
-| [[Gemma_2]Using_with_Elasticsearch_and_LangChain.ipynb]([Gemma_2]Using_with_Elasticsearch_and_LangChain.ipynb)       | Example to demonstrate using Gemma with [Elasticsearch](https://www.elastic.co/elasticsearch/), [Ollama](https://www.ollama.com/) and [LangChain](https://www.langchain.com/).          |
-| [[Gemma_2]Using_with_Firebase_Genkit_and_Ollama.ipynb]([Gemma_2]Using_with_Firebase_Genkit_and_Ollama.ipynb)                     | Example to demonstrate using Gemma with [Firebase Genkit](https://firebase.google.com/docs/genkit/) and [Ollama](https://www.ollama.com/)                                               |
-| [[Gemma_2]Using_with_LangChain.ipynb]([Gemma_2]Using_with_LangChain.ipynb)                                           | Examples to demonstrate using Gemma with [LangChain](https://www.langchain.com/).                                                                                                       |
-| [[Gemma_3]Local_Agentic_RAG.ipynb]([Gemma_3]Local_Agentic_RAG.ipynb)                                           | Build local Agentic RAG without any external APIs using [FastEmbed](https://github.com/qdrant/fastembed), [Ollama- Gemma3](https://ollama.com/models), and [Qdrant Vector database](https://cloud.qdrant.io)                                                                                                      |
-| [[Gemma_3]RAG_with_EmbeddingGemma.ipynb]([Gemma_3]RAG_with_EmbeddingGemma.ipynb)                               | Build simple RAG with [EmbeddingGemma](https://ai.google.dev/gemma/docs/embeddinggemma) |
+| [[Gemma_1]Minimal_RAG.ipynb]([Gemma_1]Minimal_RAG.ipynb) | 使用 [Google UniSim](https://github.com/google/unisim) 與 [Hugging Face](https://huggingface.co/) 建立 Gemma RAG 系統的最小範例。 |
+| [[Gemma_1]RAG_with_ChromaDB.ipynb]([Gemma_1]RAG_with_ChromaDB.ipynb) | 使用 [ChromaDB](https://www.trychroma.com/) 與 [Hugging Face](https://huggingface.co/) 建立 Gemma 的 Retrieval Augmented Generation（RAG）系統。 |
+| [[Gemma_2]RAG_LlamaIndex.ipynb]([Gemma_2]RAG_LlamaIndex.ipynb) | 使用 Gemma 與 [LlamaIndex](https://www.llamaindex.ai/) 的 RAG 範例。 |
+| [[Gemma_2]RAG_PDF_Search_in_multiple_documents_on_Colab.ipynb]([Gemma_2]RAG_PDF_Search_in_multiple_documents_on_Colab.ipynb) | 在 Google Colab 上使用 Gemma 2 2B，於多份文件中進行 RAG PDF 搜尋。 |
+| [[Gemma_2]Using_with_Elasticsearch_and_LangChain.ipynb]([Gemma_2]Using_with_Elasticsearch_and_LangChain.ipynb) | 示範如何搭配 [Elasticsearch](https://www.elastic.co/elasticsearch/)、[Ollama](https://www.ollama.com/) 與 [LangChain](https://www.langchain.com/) 使用 Gemma。 |
+| [[Gemma_2]Using_with_Firebase_Genkit_and_Ollama.ipynb]([Gemma_2]Using_with_Firebase_Genkit_and_Ollama.ipynb) | 示範如何搭配 [Firebase Genkit](https://firebase.google.com/docs/genkit/) 與 [Ollama](https://www.ollama.com/) 使用 Gemma |
+| [[Gemma_2]Using_with_LangChain.ipynb]([Gemma_2]Using_with_LangChain.ipynb) | 示範如何搭配 [LangChain](https://www.langchain.com/) 使用 Gemma。 |
+| [[Gemma_3]Local_Agentic_RAG.ipynb]([Gemma_3]Local_Agentic_RAG.ipynb) | 使用 [FastEmbed](https://github.com/qdrant/fastembed)、[Ollama- Gemma3](https://ollama.com/models) 與 [Qdrant Vector database](https://cloud.qdrant.io)，在完全不依賴外部 APIs 的情況下建立本地 Agentic RAG |
+| [[Gemma_3]RAG_with_EmbeddingGemma.ipynb]([Gemma_3]RAG_with_EmbeddingGemma.ipynb) | 使用 [EmbeddingGemma](https://ai.google.dev/gemma/docs/embeddinggemma) 建立簡單 RAG |
 
-
-## Finetuning
-| Notebook Name                                                                                                                      | Description |
+## 微調
+| Notebook Name | Description |
 |:-----------------------------------------------------------------------------------------------------------------------------------| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [[Gemma_1]Finetune_distributed.ipynb]([Gemma_1]Finetune_distributed.ipynb)                                                         | Chat with Gemma 7B and finetune it so that it generates responses in pirates' tone.                                                                                                     |
-| [[Gemma_1]Finetune_with_LLaMA_Factory.ipynb]([Gemma_1]Finetune_with_LLaMA_Factory.ipynb)                                           | Finetune Gemma using [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory).                                                                                                         |
-| [[Gemma_1]Finetune_with_XTuner.ipynb]([Gemma_1]Finetune_with_XTuner.ipynb)                                                         | Finetune Gemma using [XTuner](https://github.com/InternLM/xtuner).                                                                                                                      |
-| [[Gemma_2]Custom_Vocabulary.ipynb]([Gemma_2]Custom_Vocabulary.ipynb)                                                               | Demonstrate how to use a custom vocabulary "&lt;unused[0-98]&gt;" tokens in Gemma.                                                                                                      |
-| [[Gemma_2]Finetune_with_Axolotl.ipynb]([Gemma_2]Finetune_with_Axolotl.ipynb)                                                       | Finetune Gemma using [Axolotl](https://github.com/OpenAccess-AI-Collective/axolotl).                                                                                                    |
-| [[Gemma_2]Finetune_with_CALM.ipynb]([Gemma_2]Finetune_with_CALM.ipynb)                                                             | Finetune Gemma using [CALM](https://github.com/google-deepmind/calm).                                                                                                                   |
-| [[Gemma_2]Finetune_with_Function_Calling.ipynb]([Gemma_2]Finetune_with_Function_Calling.ipynb)                                     | Finetuning Gemma for Function Calling using [PyTorch/XLA](https://github.com/pytorch/xla).                                                                                              |
-| [[Gemma_2]Finetune_with_JORA.ipynb]([Gemma_2]Finetune_with_JORA.ipynb)                                                             | Finetune Gemma using [JORA](https://github.com/aniquetahir/JORA).                                                                                                                       |
-| [[Gemma_2]Finetune_with_LORA.ipynb]([Gemma_2]Finetune_with_LORA.ipynb)                                                             | Finetune Gemma using LORA.                                                                                                                       |
-| [[Gemma_2]Finetune_with_LitGPT.ipynb]([Gemma_2]Finetune_with_LitGPT.ipynb)                                                         | Finetune Gemma using [LitGPT](https://github.com/Lightning-AI/litgpt).                                                                                                                  |
-| [[Gemma_2]Finetune_with_Torch_XLA.ipynb]([Gemma_2]Finetune_with_Torch_XLA.ipynb)                                                   | Finetune Gemma using [PyTorch/XLA](https://github.com/pytorch/xla).                                                                                                                     |
-| [[Gemma_2]Finetune_with_Unsloth.ipynb]([Gemma_2]Finetune_with_Unsloth.ipynb)                                                       | Finetune Gemma using [Unsloth](https://unsloth.ai/blog/gemma).                                                                                                                          |
-| [[Gemma_2]Translator_of_Old_Korean_Literature.ipynb]([Gemma_2]Translator_of_Old_Korean_Literature.ipynb)                           | Use Gemma to translate old Korean literature using Keras.                                                                                                                               |
-| [[Gemma_3]Full_Model_Finetune_using_HF.ipynb]([Gemma_3]Full_Model_Finetune_using_HF.ipynb)                                         | Full model fine-tune on a mobile game NPC dataset using Hugging Face Transformers and TRL |
-| [[Gemma_3n]Finetuned_LoRA_Unsloth_on_Mental_Health_dataset.ipynb]([Gemma_3n]Finetuned_LoRA_Unsloth_on_Mental_Health_dataset.ipynb) | Finetuning of Gemma-3N (4B) model using [Unsloth](https://unsloth.ai/blog/gemma) on mental health counseling conversations to create an emotional first aid assistant, locally. |
+| [[Gemma_1]Finetune_distributed.ipynb]([Gemma_1]Finetune_distributed.ipynb) | 與 Gemma 7B 對話，並將其微調成會以海盜語氣回覆。 |
+| [[Gemma_1]Finetune_with_LLaMA_Factory.ipynb]([Gemma_1]Finetune_with_LLaMA_Factory.ipynb) | 使用 [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) 微調 Gemma。 |
+| [[Gemma_1]Finetune_with_XTuner.ipynb]([Gemma_1]Finetune_with_XTuner.ipynb) | 使用 [XTuner](https://github.com/InternLM/xtuner) 微調 Gemma。 |
+| [[Gemma_2]Custom_Vocabulary.ipynb]([Gemma_2]Custom_Vocabulary.ipynb) | 示範如何在 Gemma 中使用自訂詞彙 `&lt;unused[0-98]&gt;` tokens。 |
+| [[Gemma_2]Finetune_with_Axolotl.ipynb]([Gemma_2]Finetune_with_Axolotl.ipynb) | 使用 [Axolotl](https://github.com/OpenAccess-AI-Collective/axolotl) 微調 Gemma。 |
+| [[Gemma_2]Finetune_with_CALM.ipynb]([Gemma_2]Finetune_with_CALM.ipynb) | 使用 [CALM](https://github.com/google-deepmind/calm) 微調 Gemma。 |
+| [[Gemma_2]Finetune_with_Function_Calling.ipynb]([Gemma_2]Finetune_with_Function_Calling.ipynb) | 使用 [PyTorch/XLA](https://github.com/pytorch/xla) 為 function calling 微調 Gemma。 |
+| [[Gemma_2]Finetune_with_JORA.ipynb]([Gemma_2]Finetune_with_JORA.ipynb) | 使用 [JORA](https://github.com/aniquetahir/JORA) 微調 Gemma。 |
+| [[Gemma_2]Finetune_with_LORA.ipynb]([Gemma_2]Finetune_with_LORA.ipynb) | 使用 LORA 微調 Gemma。 |
+| [[Gemma_2]Finetune_with_LitGPT.ipynb]([Gemma_2]Finetune_with_LitGPT.ipynb) | 使用 [LitGPT](https://github.com/Lightning-AI/litgpt) 微調 Gemma。 |
+| [[Gemma_2]Finetune_with_Torch_XLA.ipynb]([Gemma_2]Finetune_with_Torch_XLA.ipynb) | 使用 [PyTorch/XLA](https://github.com/pytorch/xla) 微調 Gemma。 |
+| [[Gemma_2]Finetune_with_Unsloth.ipynb]([Gemma_2]Finetune_with_Unsloth.ipynb) | 使用 [Unsloth](https://unsloth.ai/blog/gemma) 微調 Gemma。 |
+| [[Gemma_2]Translator_of_Old_Korean_Literature.ipynb]([Gemma_2]Translator_of_Old_Korean_Literature.ipynb) | 使用 Keras 與 Gemma 翻譯韓國古典文學。 |
+| [[Gemma_3]Full_Model_Finetune_using_HF.ipynb]([Gemma_3]Full_Model_Finetune_using_HF.ipynb) | 使用 Hugging Face Transformers 與 TRL，在手機遊戲 NPC dataset 上進行完整模型微調 |
+| [[Gemma_3n]Finetuned_LoRA_Unsloth_on_Mental_Health_dataset.ipynb]([Gemma_3n]Finetuned_LoRA_Unsloth_on_Mental_Health_dataset.ipynb) | 使用 [Unsloth](https://unsloth.ai/blog/gemma) 在心理健康諮商對話資料集上，於本地對 Gemma-3N（4B）模型進行 LoRA 微調，打造情緒急救助理。 |
 
-## Alignment
+## 對齊
 | Notebook Name | Description |
 | :------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [[Gemma_2]Aligning_DPO.ipynb]([Gemma_2]Aligning_DPO.ipynb)                                               | Demonstrate how to align a Gemma model using DPO (Direct Preference Optimization) with [Hugging Face TRL](https://huggingface.co/docs/trl/en/index).                                    |
+| [[Gemma_2]Aligning_DPO.ipynb]([Gemma_2]Aligning_DPO.ipynb) | 示範如何使用 [Hugging Face TRL](https://huggingface.co/docs/trl/en/index) 與 DPO（Direct Preference Optimization）對齊 Gemma 模型。 |
 
-## Evaluation
+## 評估
 | Notebook Name | Description |
 | :------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [[Gemma_2]evaluation.ipynb]([Gemma_2]evaluation.ipynb)                                                               | Demonstrate how to use Eleuther AI's LM evaluation harness to perform model evaluation on Gemma.                                                                                        |
+| [[Gemma_2]evaluation.ipynb]([Gemma_2]evaluation.ipynb) | 示範如何使用 Eleuther AI 的 LM evaluation harness 對 Gemma 進行模型評估。 |
 
 ## Agentic AI
-| Notebook Name                                                                                     | Description                                                                                                                          |
+| Notebook Name | Description |
 | :------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------------------- |
-| [[Gemma_2]Agentic_AI.ipynb]([Gemma_2]Agentic_AI.ipynb)                                            | Demonstrate how to build an Agentic AI using Gemma 2.                                                                                |
-| [[Gemma_2]Function_Calling_with_Groq_Langchain.ipynb]([Gemma_2]Function_Calling_with_Groq_Langchain.ipynb)  | Demonstrate how to create a simple agent using Langchain and groq using Gemma2.                                            |
-| [[Gemma_3]Meme_Generator.ipynb]([Gemma_3]Meme_Generator.ipynb)                                    | Meme Generator using Gemma 3 4B IT model                                                                                             |
-| [[Gemma_3]Function_Calling_Routing_and_Monitoring_using_Gemma_Google_Genai.ipynb]([Gemma_3]Function_Calling_Routing_and_Monitoring_using_Gemma_Google_Genai.ipynb)                             | Implement and Monitor Agentic RAG workflow                                                                                            |
-| [[Gemma_3]Function_Calling_with_HF.ipynb]([Gemma_3]Function_Calling_with_HF.ipynb)                | Demonstrate how to use function calling with Gemma 3 using [Hugging Face](https://huggingface.co/).                                  |
-| [[Gemma_3]Function_Calling_with_HF_document_summarizer.ipynb]([Gemma_3]Function_Calling_with_HF_document_summarizer.ipynb ) | Demonstrate how to build a document summarizer using function calling with Gemma 3 and Hugging Face.       |
-| [[Gemma_3]Local_Agentic_RAG.ipynb]([Gemma_3]Local_Agentic_RAG.ipynb)                                           | Build local Agentic RAG without any external APIs using [FastEmbed](https://github.com/qdrant/fastembed), [Ollama- Gemma3](https://ollama.com/models), and [Qdrant Vector database](https://cloud.qdrant.io)                                                                                                      |
+| [[Gemma_2]Agentic_AI.ipynb]([Gemma_2]Agentic_AI.ipynb) | 示範如何使用 Gemma 2 建立 Agentic AI。 |
+| [[Gemma_2]Function_Calling_with_Groq_Langchain.ipynb]([Gemma_2]Function_Calling_with_Groq_Langchain.ipynb) | 示範如何結合 Langchain、groq 與 Gemma2 建立簡單 agent。 |
+| [[Gemma_3]Meme_Generator.ipynb]([Gemma_3]Meme_Generator.ipynb) | 使用 Gemma 3 4B IT model 的 Meme Generator |
+| [[Gemma_3]Function_Calling_Routing_and_Monitoring_using_Gemma_Google_Genai.ipynb]([Gemma_3]Function_Calling_Routing_and_Monitoring_using_Gemma_Google_Genai.ipynb) | 實作並監控 Agentic RAG 工作流程 |
+| [[Gemma_3]Function_Calling_with_HF.ipynb]([Gemma_3]Function_Calling_with_HF.ipynb) | 示範如何透過 [Hugging Face](https://huggingface.co/) 搭配 Gemma 3 使用 function calling。 |
+| [[Gemma_3]Function_Calling_with_HF_document_summarizer.ipynb]([Gemma_3]Function_Calling_with_HF_document_summarizer.ipynb ) | 示範如何使用 Gemma 3、Hugging Face 與 function calling 建立文件摘要器。 |
+| [[Gemma_3]Local_Agentic_RAG.ipynb]([Gemma_3]Local_Agentic_RAG.ipynb) | 使用 [FastEmbed](https://github.com/qdrant/fastembed)、[Ollama- Gemma3](https://ollama.com/models) 與 [Qdrant Vector database](https://cloud.qdrant.io)，在完全不依賴外部 APIs 的情況下建立本地 Agentic RAG |

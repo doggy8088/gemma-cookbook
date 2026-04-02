@@ -1,33 +1,33 @@
-# Response: Sub-Billion Model Slicing and Audio Encoder Reduction for Gemma 3n
+# Response: Gemma 3n 的 Sub-Billion Model Slicing 與 Audio Encoder Reduction
 
-## Overview
+## 概覽
 
-This document provides technical guidance and recommendations for two feature requests related to Gemma 3n model slicing for resource-constrained environments (mobile devices with 4-6GB RAM and web deployment):
+本文件針對兩項與 Gemma 3n model slicing 有關的 feature requests，提供技術指引與建議，目標是支援資源受限環境（4-6GB RAM 的 mobile devices 與 web deployment）：
 
-1. Creating models smaller than 1.91B (potentially 0.9B or smaller with 26 layers)
-2. Applying layer reduction techniques to the audio encoder
+1. 建立小於 1.91B 的模型（可達 0.9B 或更小，26 layers）
+2. 將 layer reduction 技術套用到 audio encoder
 
 ---
 
-## Part 1: Creating Sub-Billion Models (0.9B or Smaller)
+## Part 1: 建立 Sub-Billion Models（0.9B 或更小）
 
-### Current Configuration Landscape
+### 目前的 Configuration Landscape
 
-The MatFormer Lab notebook (`[Gemma_3n]MatFormer_Lab.ipynb`) currently supports slicing configurations ranging from **1.91B (E2B)** to **3.98B (E4B)**, with the smallest being:
+MatFormer Lab notebook（`[Gemma_3n]MatFormer_Lab.ipynb`）目前支援的 slicing configurations 範圍介於 **1.91B（E2B）** 到 **3.98B（E4B）**，其中最小的是：
 
-- **Config for official E2B Model**
-  - Effective Parameters: 1.91B
-  - Number of Layers: 30
-  - Layers Skipped: [20, 21, 22, 23, 24]
-  - FFN Hidden Dims: [2048 * 4] (8,192) for all layers
+- **官方 E2B Model 的 config**
+  - Effective Parameters：1.91B
+  - Number of Layers：30
+  - Layers Skipped：`[20, 21, 22, 23, 24]`
+  - FFN Hidden Dims：所有 layers 都是 `[2048 * 4]`（8,192）
 
-### Feasibility of Sub-Billion Models
+### Sub-Billion Models 的可行性
 
-**Yes, it is absolutely possible to create models smaller than 0.9B** using the MatFormer slicing technique. Here are the design considerations:
+**是的，絕對可以透過 MatFormer slicing 技術建立小於 0.9B 的模型**。設計上要考量以下幾點：
 
-#### Option A: Layer Reduction Path (26 Layers)
+#### Option A: 走 Layer Reduction 路線（26 Layers）
 
-For a **0.9B model with 26 layers**, consider this configuration:
+對於 **26 layers 的 0.9B 模型**，可考慮以下 configuration：
 
 ```python
 # Proposed configuration for 0.9B model
@@ -44,9 +44,9 @@ ffn_hidden_dims = [2048 * 3] * 10 + [int(2048 * 3.5)] * 10 + [2048 * 4] * 7
 # **Total: ~950M (0.95B)**
 ```
 
-#### Option B: Even Smaller - 0.5B Model with 20 Layers
+#### Option B: 更小的 0.5B 模型（20 Layers）
 
-For even more aggressive compression:
+若要更積極壓縮：
 
 ```python
 # Proposed configuration for 0.5B model
@@ -83,21 +83,21 @@ ffn_hidden_dims = [
 # Estimated model size: ~500M (0.5B)
 ```
 
-### Optimal Slicing Recommendations
+### 最佳化 Slicing 建議
 
-Based on the MatFormer design principles observed in existing configs:
+依照既有 configs 可觀察到的 MatFormer 設計原則：
 
-#### Key Design Principles:
+#### 關鍵設計原則：
 
-1. **Layer Distribution**: Skip layers from the middle-to-end sections (layers 15-24) rather than early layers, as early layers capture important low-level linguistic features
-2. **FFN Capacity Distribution**: 
-   - Layers 0-10: Lower capacity (2048×2 to 2048×3)
-   - Layers 11-20: Medium capacity (2048×3 to 2048×3.5)
-   - Layers 21+: Higher capacity (2048×4)
-3. **Reserved Layers**: Always keep the last 2 global layers (layers 33-34 in original) as they are critical for output quality
-4. **KV Sharing**: The last 2 layers use KV sharing - ensure they're preserved
+1. **Layer Distribution**：應優先從中後段（layers 15-24）skip，而不是前段 layers，因為前段 layers 會捕捉重要的低階語言特徵
+2. **FFN Capacity Distribution**：
+   - Layers 0-10：較低容量（2048×2 到 2048×3）
+   - Layers 11-20：中等容量（2048×3 到 2048×3.5）
+   - Layers 21+：較高容量（2048×4）
+3. **Reserved Layers**：務必保留最後 2 個 global layers（原始模型中的 layers 33-34），它們對輸出品質非常關鍵
+4. **KV Sharing**：最後 2 層使用 KV sharing，因此必須保留
 
-#### Configuration for 0.9B (26 layers):
+#### 0.9B（26 layers）建議 Configuration：
 
 ```python
 # Recommended configuration
@@ -113,9 +113,9 @@ ffn_hidden_dims = [2048 * 3] * 10 + [int(2048 * 3.5)] * 9 + [2048 * 4] * 7
 # Target Deployment: 4-6 GB RAM mobile devices (with 4-bit quantization)
 ```
 
-### Implementation in MatFormer Lab
+### 在 MatFormer Lab 中實作
 
-To use this configuration with the existing MatFormer Lab notebook:
+若要在現有 MatFormer Lab notebook 中使用此設定：
 
 ```python
 # In the "Config details" cell, uncomment and set:
@@ -128,27 +128,27 @@ ffn_hidden_dims_str = str(ffn_hidden_dims)
 
 ## Part 2: Audio Encoder Slicing
 
-### Current Architecture
+### 現有架構
 
-Gemma 3n is a **multimodal model** with:
-- Text encoder/decoder (main focus of current slicing)
-- Vision encoder (image processing)
-- Audio encoder (speech processing)
+Gemma 3n 是一個 **multimodal model**，包含：
+- Text encoder/decoder（目前 slicing 的主要焦點）
+- Vision encoder（圖片處理）
+- Audio encoder（語音處理）
 
-### Feasibility of Audio Encoder Reduction
+### Audio Encoder Reduction 的可行性
 
-**Yes, the audio encoder can be reduced using similar layer-slicing techniques**, but requires additional implementation work since the MatFormer Lab notebook currently focuses on text model slicing.
+**可以，audio encoder 也能使用類似的 layer-slicing 技術縮減**，但因為 MatFormer Lab notebook 目前主要聚焦於 text model slicing，所以仍需要額外實作。
 
-#### Audio Encoder Characteristics
+#### Audio Encoder 特性
 
-The audio encoder in Gemma 3n typically has:
-- ~12-24 transformer layers
-- Similar structure to the text encoder (attention + FFN)
-- Can be reduced by skipping layers or reducing FFN dimensions
+Gemma 3n 的 audio encoder 通常具備：
+- 約 12-24 個 transformer layers
+- 與 text encoder 類似的結構（attention + FFN）
+- 可透過 skip layers 或縮減 FFN dimensions 來壓縮
 
-### Proposed Audio Encoder Slicing Approach
+### 建議的 Audio Encoder Slicing 方法
 
-#### Step 1: Identify Audio Encoder Configuration
+#### Step 1: 找出 Audio Encoder Configuration
 
 ```python
 # Load the original model config
@@ -163,9 +163,9 @@ print(f"Original audio layers: {audio_config.num_hidden_layers}")
 print(f"Audio FFN dimension: {audio_config.intermediate_size}")
 ```
 
-#### Step 2: Recommended Audio Encoder Reduction
+#### Step 2: 建議的 Audio Encoder 縮減方式
 
-For a 0.9B overall model, recommend:
+若整體目標是 0.9B，建議：
 
 ```python
 # Audio encoder reduction (from original ~16-20 layers)
@@ -179,15 +179,15 @@ audio_ffn_hidden_dims = [1024 * 3] * 12  # Reduce from 1024*4
 # Combined with text (0.8B) = 0.9B total
 ```
 
-#### Step 3: Implementation Requirements
+#### Step 3: 實作需求
 
-Unlike the text encoder, audio encoder slicing requires:
+與 text encoder 不同，audio encoder slicing 額外需要：
 
-1. **Modify model slicing code** to handle audio encoder parameters similarly:
-   - Pattern: `.audio_model.layers.{layer_idx}.`
-   - Apply same FFN dimension slicing logic
+1. **修改 model slicing code**，讓它能以同樣方式處理 audio encoder 參數：
+   - Pattern：`.audio_model.layers.{layer_idx}.`
+   - 套用相同的 FFN dimension slicing logic
 
-2. **Update safetensors loading** in the MatFormer Lab notebook:
+2. **更新 MatFormer Lab notebook 中的 safetensors loading**：
    ```python
    # Add audio processing to the tensor slicing loop
    elif '.audio_model.layers.' in tensor_name:
@@ -201,8 +201,9 @@ Unlike the text encoder, audio encoder slicing requires:
            continue
        new_layer_idx = audio_layer_rename_map[old_layer_idx]
        # ... slice audio FFN dimensions ...
+   ```
 
-3. **Update config.json**:
+3. **更新 config.json**：
    ```python
    config.audio_config.num_hidden_layers = 12  # Reduced from 16
    config.audio_config.intermediate_size = 3072  # Reduced from 4096
@@ -210,7 +211,7 @@ Unlike the text encoder, audio encoder slicing requires:
 
 ### Audio + Text Joint Optimization
 
-For optimal performance in resource-constrained scenarios, suggest:
+若要在資源受限情境中取得最佳表現，可考慮：
 
 | Model Size | Text Layers | Text FFN | Audio Layers | Audio FFN | RAM (4-bit) | Use Case |
 |-----------|------------|---------|--------------|-----------|-----------|----------|
@@ -222,24 +223,24 @@ For optimal performance in resource-constrained scenarios, suggest:
 
 ## Implementation Roadmap
 
-### Phase 1: Text Model Only (Immediate)
-Use existing MatFormer Lab notebook with 0.9B configuration (26 layers)
+### Phase 1: 僅處理 Text Model（可立即進行）
+使用現有 MatFormer Lab notebook 搭配 0.9B configuration（26 layers）
 
-### Phase 2: Audio Encoder Support (Enhancement)
-1. Extend MatFormer Lab slicing logic to handle audio encoder
-2. Add audio-specific configuration parameters
-3. Create new notebook: `[Gemma_3n]MatFormer_Lab_with_Audio_Slicing.ipynb`
+### Phase 2: 支援 Audio Encoder（Enhancement）
+1. 擴充 MatFormer Lab slicing logic，使其可處理 audio encoder
+2. 加入 audio 專用 configuration parameters
+3. 建立新 notebook：`[Gemma_3n]MatFormer_Lab_with_Audio_Slicing.ipynb`
 
-### Phase 3: Validation & Benchmarking (Optional)
-1. Evaluate MMLU performance for sub-billion configs
-2. Measure inference latency on target mobile devices
-3. Create mobile deployment guide
+### Phase 3: 驗證與 Benchmarking（選用）
+1. 評估 sub-billion configs 的 MMLU 表現
+2. 在目標 mobile devices 上量測 inference latency
+3. 撰寫 mobile deployment guide
 
 ---
 
 ## Practical Migration Steps
 
-### For 0.9B Model without Audio Changes:
+### 針對不含 Audio 變更的 0.9B 模型：
 
 ```python
 # In MatFormer Lab notebook, cell "Config details":
@@ -253,47 +254,46 @@ ffn_hidden_dims_str = str(ffn_hidden_dims)
 # Run remaining cells as usual
 ```
 
-### For Full Implementation with Audio:
+### 若要完整支援 Audio：
 
-A new enhanced notebook would need:
+需要建立新的增強版 notebook，其中包含：
 - Audio encoder configuration UI
-- Extended tensor slicing logic
-- Separate audio layer skip/FFN configs
+- 擴充過的 tensor slicing logic
+- 個別的 audio layer skip / FFN configs
 - Joint optimization validation
 
 ---
 
 ## Deployment Recommendations
 
-### For 4-6 GB Mobile RAM:
+### 針對 4-6 GB Mobile RAM：
 
-1. **Use 0.9B model** with configuration above
-2. **Apply 4-bit quantization** (NF4/Int4) to reduce size to ~1.2-1.5 GB
-3. **Keep audio encoder lean** (12 layers, 1024×3 FFN)
-4. **Disable KV cache** during inference if memory is critical
+1. **使用 0.9B 模型**，採用上述 configuration
+2. **套用 4-bit quantization**（NF4/Int4），將大小降至約 1.2-1.5 GB
+3. **保持 audio encoder 精簡**（12 layers、1024×3 FFN）
+4. 若記憶體極度吃緊，inference 時可**停用 KV cache**
 
-### Estimated Performance:
-- **MMLU Accuracy**: 46-48% (vs. 50.9% for E2B)
-- **Inference Speed**: 50-100 tokens/sec on modern mobile GPUs
-- **Memory Footprint**: 1.5-2.2 GB during inference
+### 預估表現：
+- **MMLU Accuracy**：46-48%（E2B 為 50.9%）
+- **Inference Speed**：現代 mobile GPUs 上約 50-100 tokens/sec
+- **Memory Footprint**：inference 過程約 1.5-2.2 GB
 
 ---
 
 ## References
 
-- MatFormer Paper: https://arxiv.org/abs/2310.07707
-- Gemma 3n Developer Guide: https://developers.googleblog.com/en/introducing-gemma-3n-developer-guide
-- MatFormer Lab Notebook: `[Gemma_3n]MatFormer_Lab.ipynb`
-- Official Slicing Configs: https://huggingface.co/datasets/google/gemma3n-slicing-configs
+- MatFormer Paper：https://arxiv.org/abs/2310.07707
+- Gemma 3n Developer Guide：https://developers.googleblog.com/en/introducing-gemma-3n-developer-guide
+- MatFormer Lab Notebook：`[Gemma_3n]MatFormer_Lab.ipynb`
+- Official Slicing Configs：https://huggingface.co/datasets/google/gemma3n-slicing-configs
 
 ---
 
 ## Next Steps
 
-To implement these recommendations:
+若要落實這些建議：
 
-1. **Test 0.9B configuration** using existing MatFormer Lab with proposed layer/FFN settings
-2. **Evaluate on target hardware** (4-6GB RAM mobile devices)
-3. **For audio support**: File enhancement request with proposed tensor slicing logic
-4. **Contribute back**: Share optimal configurations with community via Hugging Face
-
+1. 使用提議的 layer / FFN 設定，透過現有 MatFormer Lab **測試 0.9B configuration**
+2. 在目標硬體（4-6GB RAM mobile devices）上**實際評估**
+3. 若要支援 audio：可先提出 enhancement request，並附上建議的 tensor slicing logic
+4. **回饋社群**：將最佳化 configurations 分享到 Hugging Face

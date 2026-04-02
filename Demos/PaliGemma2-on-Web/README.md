@@ -1,28 +1,28 @@
-### Developed by [Nitin Tiwari](https://linkedin.com/in/tiwari-nitin).
+### 由 [Nitin Tiwari](https://linkedin.com/in/tiwari-nitin) 開發。
 
-# Inference PaliGemma 2 on the browser with ONNX & Transformers.js
-This project is an implementation of inferencing the paligemma2-3b-mix-224 model on the browser using its converted ONNX weights and Hugging Face Transformers.js.
+# 使用 ONNX 與 Transformers.js 在瀏覽器中對 PaliGemma 2 執行推論
+這個專案示範如何使用轉換後的 ONNX weights 與 Hugging Face Transformers.js，在瀏覽器中對 paligemma2-3b-mix-224 模型進行推論。
 
-## PaliGemma 2 to ONNX Conversion:
+## PaliGemma 2 轉 ONNX 流程：
 ![Logo](assets/paligemma2-onnx-pipeline.png)
 
 
-## Steps to run:
+## 執行步驟：
 
-1. Clone the repository on your local machine.
-2. Navigate to `gemma-cookbook/Demos/PaliGemma2-on-Web` directory.
-3. Run `npm install` to install the Node.js packages.
-4. Run `node server.js` to start the server.
-5. Open `localhost:3000` on your web browser and start inferencing with PaliGemma 2.
+1. 在本機複製這個 repository。
+2. 切換到 `gemma-cookbook/Demos/PaliGemma2-on-Web` 目錄。
+3. 執行 `npm install` 安裝 Node.js packages。
+4. 執行 `node server.js` 啟動 server。
+5. 在瀏覽器開啟 `localhost:3000`，開始使用 PaliGemma 2 進行推論。
 
 > [!NOTE]  
-> For the first time, it will take around 10-15 minutes to load the model weights.
+> 第一次執行時，模型 weights 載入大約需要 10 到 15 分鐘。
 
-## Results:
+## 結果：
 ![Logo](assets/paligemma2-onnx-output.gif)
 
 
-## Resources & References
+## 資源與參考資料
 
 1. [Google DeepMind PaliGemma 2](https://developers.googleblog.com/en/introducing-paligemma-2-mix/)
 2. Colab Notebooks: 
@@ -37,5 +37,5 @@ This project is an implementation of inferencing the paligemma2-3b-mix-224 model
   </tr>
 </table>
 
-3. [**Medium Blog**](https://medium.com/@tiwarinitin1999/inference-paligemma-2-with-transformers-js-5545986ac14a) for step-by-step implementation.
+3. [**Medium Blog**](https://medium.com/@tiwarinitin1999/inference-paligemma-2-with-transformers-js-5545986ac14a) 提供逐步實作說明。
 4. [ONNX Community](https://huggingface.co/onnx-community)

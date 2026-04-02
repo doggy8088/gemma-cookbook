@@ -1,3 +1,3 @@
 # pipet-code-agent-2
 
-Updated verison of Pipet Code Agent, a Visual Studio Code extension that can communicate with a hosted version of a Gemma 2 artificial intelligence model for code generation and code-related requests.
+這是 Pipet Code Agent 的更新版本，一個 Visual Studio Code extension，可與託管中的 Gemma 2 artificial intelligence 模型通訊，以處理程式碼生成與其他程式相關請求。

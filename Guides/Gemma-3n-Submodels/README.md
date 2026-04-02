@@ -2,89 +2,89 @@
 
 Author: [Solventerritory](https://github.com/Solventerritory)
 
-## 📋 Overview
+## 📋 概覽
 
-This package provides comprehensive guidance and tools for creating **sub-billion Gemma 3n models** (0.9B and smaller) optimized for deployment on **resource-constrained mobile devices (4-6GB RAM) and web applications**.
+這個套件提供完整指引與工具，用來建立 **sub-billion Gemma 3n models**（0.9B 及更小版本），並針對 **資源受限的 mobile devices（4-6GB RAM）與 web applications** 進行最佳化部署。
 
-**✅ Status**: Feasibility confirmed. 0.9B and 0.5B models are practical and recommended.
+**✅ 狀態**：可行性已確認。0.9B 與 0.5B 模型都實際可用，且值得採納。
 
 ---
 
-## 📚 Documents in This Package
+## 📚 套件內文件
 
-### 1. **FEATURE_REQUEST_RESPONSE_SUMMARY.md** ⭐ START HERE
-- **What**: Executive summary and quick reference
-- **Length**: 5-10 minutes
-- **Contains**:
-  - Overview of the solution
-  - Recommended 0.9B configuration
-  - Key findings and performance metrics
-  - FAQ section
-  - Next steps
+### 1. **FEATURE_REQUEST_RESPONSE_SUMMARY.md** ⭐ 從這裡開始
+- **用途**：Executive summary 與快速參考
+- **閱讀時間**：5-10 分鐘
+- **內容包含**：
+  - 解法總覽
+  - 建議的 0.9B configuration
+  - 關鍵發現與效能指標
+  - FAQ
+  - 下一步
 
-### 2. **RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md** 📖 DETAILED ANALYSIS
-- **What**: Comprehensive technical analysis (deep dive)
-- **Length**: 15-20 minutes
-- **Contains**:
-  - Feasibility assessment (YES for both text and audio)
-  - Multiple sub-billion configurations:
-    - 0.9B (26 layers) ⭐ **RECOMMENDED**
-    - 0.5B (20 layers) - for web
-    - 0.7B (23 layers) - mid-range
-    - 1.3B (28 layers) - higher accuracy
-    - 1.5B (30 layers) - edge servers
-  - Audio encoder slicing approach
-  - Implementation roadmap
-  - Performance predictions
-  - Deployment recommendations
+### 2. **RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md** 📖 詳細分析
+- **用途**：完整技術分析（deep dive）
+- **閱讀時間**：15-20 分鐘
+- **內容包含**：
+  - 可行性評估（text 與 audio 都可行）
+  - 多種 sub-billion configurations：
+    - 0.9B（26 layers）⭐ **建議**
+    - 0.5B（20 layers）- 適合 web
+    - 0.7B（23 layers）- 中階
+    - 1.3B（28 layers）- 更高準確度
+    - 1.5B（30 layers）- edge servers
+  - Audio encoder slicing 方法
+  - 實作 roadmap
+  - 效能預估
+  - 部署建議
 
-### 3. **QUICK_START_SUB_BILLION_MODELS.md** 🚀 IMPLEMENTATION GUIDE
-- **What**: Step-by-step practical guide
-- **Length**: 10-15 minutes
-- **Contains**:
-  - 5-minute TL;DR to get started
-  - Detailed step-by-step implementation
-  - Configuration presets for different scenarios
-  - FFN dimension strategy explained
+### 3. **QUICK_START_SUB_BILLION_MODELS.md** 🚀 實作指南
+- **用途**：逐步操作的實務指南
+- **閱讀時間**：10-15 分鐘
+- **內容包含**：
+  - 5 分鐘 TL;DR
+  - 詳細逐步實作說明
+  - 不同情境的 configuration presets
+  - FFN dimension 策略說明
   - Inference optimization tips
   - Performance benchmarks
-  - Troubleshooting guide
+  - 疑難排解指南
 
-### 4. **custom_slicing_configs.py** 🐍 TOOL
-- **What**: Programmatic configuration helper (runnable Python script)
-- **Length**: Use as needed
-- **Contains**:
-  - 5 pre-built configurations with full parameters
+### 4. **custom_slicing_configs.py** 🐍 工具
+- **用途**：程式化 configuration helper（可執行 Python script）
+- **閱讀時間**：依需求使用
+- **內容包含**：
+  - 5 組預建 configurations 與完整參數
   - Validation functions
-  - Export utilities for MatFormer Lab
+  - 給 MatFormer Lab 使用的 export utilities
   - Comparison tables
   - Audio encoder configuration presets
   - Example usage
 
 ---
 
-## 🎯 Quick Start (5 Minutes)
+## 🎯 Quick Start（5 分鐘）
 
-### If you just want to use 0.9B model:
+### 如果你只想直接使用 0.9B 模型：
 
-1. **Get the configuration**:
+1. **取得設定**：
    ```python
    layers_to_skip = [19, 20, 21, 22, 23, 24, 25, 26, 27]
    ffn_hidden_dims = [2048*3]*10 + [int(2048*3.5)]*9 + [2048*4]*7
    ```
 
-2. **Open** `[Gemma_3n]MatFormer_Lab.ipynb`
+2. **開啟** `[Gemma_3n]MatFormer_Lab.ipynb`
 
-3. **Replace** the config selection with the above values
+3. **將 config selection 替換成**上述值
 
-4. **Run** the notebook to slice the model
+4. **執行** notebook 以 slice 出模型
 
-5. **Result**: 0.95B model that fits in 4-6GB RAM ✓
+5. **結果**：得到可放進 4-6GB RAM 的 0.95B 模型 ✓
 
-**Expected Performance**:
-- Model Size: 1.5 GB (with 4-bit quantization)
-- MMLU Accuracy: 46-48%
-- Inference Speed: 50-100 tokens/sec (GPU), 5-15 tokens/sec (mobile)
+**預期效能**：
+- Model Size：1.5 GB（搭配 4-bit quantization）
+- MMLU Accuracy：46-48%
+- Inference Speed：50-100 tokens/sec（GPU），5-15 tokens/sec（mobile）
 
 ---
 
@@ -92,115 +92,115 @@ This package provides comprehensive guidance and tools for creating **sub-billio
 
 | Config | Layers | Params | MMLU Est. | 4-bit Size | Best For |
 |--------|--------|--------|----------|-----------|----------|
-| **0.5B** | 20 | 0.52B | 40-42% | 0.8 GB | Web, ultra-light |
-| **0.7B** | 23 | 0.71B | 44-46% | 1.1 GB | Light mobile |
-| **0.9B** ⭐ | 26 | 0.95B | 46-48% | **1.5 GB** | **Mobile 4-6GB** |
-| **1.3B** | 28 | 1.32B | 48-50% | 2.1 GB | Mobile 6-8GB |
-| **E2B** | 30 | 1.91B | 50.9% | 2.9 GB | Mobile 8GB+ |
+| **0.5B** | 20 | 0.52B | 40-42% | 0.8 GB | Web、ultra-light |
+| **0.7B** | 23 | 0.71B | 44-46% | 1.1 GB | 輕量 mobile |
+| **0.9B** ⭐ | 26 | 0.95B | 46-48% | **1.5 GB** | **4-6GB mobile** |
+| **1.3B** | 28 | 1.32B | 48-50% | 2.1 GB | 6-8GB mobile |
+| **E2B** | 30 | 1.91B | 50.9% | 2.9 GB | 8GB+ mobile |
 | **1.5B** | 30 | 1.51B | 49-51% | 2.3 GB | High-end mobile |
 
-**⭐ Recommended for your use case: 0.9B model**
+**⭐ 你的情境建議使用：0.9B 模型**
 
 ---
 
-## 🔧 How to Use This Package
+## 🔧 如何使用這個套件
 
-### For Different User Types:
+### 依使用者類型：
 
-#### **I just want to use 0.9B**
-→ Read: [FEATURE_REQUEST_RESPONSE_SUMMARY.md](./FEATURE_REQUEST_RESPONSE_SUMMARY.md) + [QUICK_START_SUB_BILLION_MODELS.md](./QUICK_START_SUB_BILLION_MODELS.md) TL;DR section
+#### **我只想用 0.9B**
+→ 閱讀：[FEATURE_REQUEST_RESPONSE_SUMMARY.md](./FEATURE_REQUEST_RESPONSE_SUMMARY.md) + [QUICK_START_SUB_BILLION_MODELS.md](./QUICK_START_SUB_BILLION_MODELS.md) 的 TL;DR 區段
 
-#### **I want to understand the technical details**
-→ Read: [RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md](./RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md)
+#### **我想了解技術細節**
+→ 閱讀：[RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md](./RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md)
 
-#### **I want step-by-step instructions**
-→ Follow: [QUICK_START_SUB_BILLION_MODELS.md](./QUICK_START_SUB_BILLION_MODELS.md) implementation section
+#### **我想看逐步操作**
+→ 依照：[QUICK_START_SUB_BILLION_MODELS.md](./QUICK_START_SUB_BILLION_MODELS.md) 的 implementation section
 
-#### **I want to explore different configs programmatically**
-→ Use: `python custom_slicing_configs.py`
+#### **我想用程式方式探索不同 configs**
+→ 使用：`python custom_slicing_configs.py`
 
-#### **I want to understand audio encoder slicing**
-→ Read: [RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md](./RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md) Part 2
+#### **我想了解 audio encoder slicing**
+→ 閱讀：[RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md](./RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md) Part 2
 
 ---
 
-## 🎓 Key Concepts Explained
+## 🎓 關鍵概念說明
 
-### What is Model Slicing?
+### 什麼是 Model Slicing？
 
-Model slicing reduces model size by:
-1. **Skipping layers** - Remove some transformer layers
-2. **Reducing FFN dimensions** - Reduce feed-forward network size
-3. **Maintaining quality** - Keep important layers at full capacity
+Model slicing 透過以下方式縮小模型：
+1. **Skipping layers** - 移除部分 transformer layers
+2. **Reducing FFN dimensions** - 降低 feed-forward network 大小
+3. **Maintaining quality** - 保留重要 layers 的完整容量
 
-### Why This Works
+### 為什麼可行？
 
-Based on **MatFormer** (Matryoshka Transformer) architecture:
-- Nested models within larger models
-- Early layers capture basic features (can be smaller)
-- Late layers critical for output quality (must be larger)
-- No additional training needed!
+其原理基於 **MatFormer**（Matryoshka Transformer）架構：
+- 大模型內含多個巢狀子模型
+- 前段 layers 主要負責捕捉基礎特徵（可更小）
+- 後段 layers 對輸出品質更關鍵（必須保留較大容量）
+- 不需要額外訓練
 
-### Example: 0.9B Model
+### 範例：0.9B 模型
 
 ```
 Original E4B: 35 layers, 8192 FFN → 3.98B parameters
 
-Skip layers:  [19, 20, 21, 22, 23, 24, 25, 26, 27]  (9 layers removed)
+Skip layers:  [19, 20, 21, 22, 23, 24, 25, 26, 27]  (移除 9 layers)
                 ↓
-Result:       26 layers remaining
+Result:       保留 26 layers
 
-Reduce FFN:   Early (6,144) → Mid (7,168) → Late (8,192)
+Reduce FFN:   前段（6,144）→ 中段（7,168）→ 後段（8,192）
                 ↓
 Final model:  26 layers, smart FFN → 0.95B parameters ✓
 ```
 
 ---
 
-## ✅ What's Included
+## ✅ 包含內容
 
 | File | Purpose | Status |
 |------|---------|--------|
 | FEATURE_REQUEST_RESPONSE_SUMMARY.md | Executive summary | ✅ Complete |
-| RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md | Deep technical analysis | ✅ Complete |
-| QUICK_START_SUB_BILLION_MODELS.md | Implementation guide | ✅ Complete |
+| RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md | 深度技術分析 | ✅ Complete |
+| QUICK_START_SUB_BILLION_MODELS.md | 實作指南 | ✅ Complete |
 | custom_slicing_configs.py | Configuration tool | ✅ Complete & tested |
-| This file (README_SUB_BILLION_MODELS.md) | Navigation & overview | ✅ You're reading it |
+| 本檔（README_SUB_BILLION_MODELS.md） | 導覽與總覽 | ✅ 你正在閱讀 |
 
-**Total**: ~2,000 lines of comprehensive guidance
+**總計**：約 2,000 行的完整指引
 
 ---
 
-## 🚀 Implementation Steps
+## 🚀 實作步驟
 
-### Step 1: Review the Summary
-Read FEATURE_REQUEST_RESPONSE_SUMMARY.md (5 min)
+### Step 1：閱讀摘要
+先看 FEATURE_REQUEST_RESPONSE_SUMMARY.md（5 分鐘）
 
-### Step 2: Choose Your Configuration
-From the comparison table above, select based on your RAM:
-- 4-6 GB: Use **0.9B** ⭐ (recommended)
-- 4 GB: Use **0.7B** or **0.5B**
-- 6-8 GB: Use **1.3B** for better accuracy
+### Step 2：選擇你的 Configuration
+根據上面的 comparison table，依 RAM 選擇：
+- 4-6 GB：使用 **0.9B** ⭐（建議）
+- 4 GB：使用 **0.7B** 或 **0.5B**
+- 6-8 GB：使用 **1.3B** 取得更高準確度
 
-### Step 3: Get the Configuration Code
-- Option A: Copy from QUICK_START guide
-- Option B: Run `python custom_slicing_configs.py` and copy output
-- Option C: Extract from [RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md](./RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md)
+### Step 3：取得 Configuration Code
+- Option A：從 QUICK_START 指南複製
+- Option B：執行 `python custom_slicing_configs.py` 並複製輸出
+- Option C：從 [RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md](./RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md) 擷取
 
-### Step 4: Apply to MatFormer Lab
-Follow the step-by-step guide in QUICK_START_SUB_BILLION_MODELS.md
+### Step 4：套用到 MatFormer Lab
+依照 QUICK_START_SUB_BILLION_MODELS.md 的逐步說明操作
 
-### Step 5: Test & Deploy
-- Test on your target device
-- Measure inference speed and memory usage
-- Fine-tune if needed
-- Deploy with 4-bit quantization
+### Step 5：測試與部署
+- 在目標裝置上測試
+- 量測 inference speed 與 memory usage
+- 視需要再微調
+- 以 4-bit quantization 部署
 
 ---
 
 ## 📈 Performance Metrics
 
-### Inference Speed (Tokens/Second)
+### Inference Speed（Tokens/Second）
 
 ```
 GPU (NVIDIA L4):
@@ -212,27 +212,27 @@ Mobile GPU (Snapdragon 8 Gen 3):
   0.5B (4-bit): 10-25 tokens/sec
 
 CPU (16-core):
-  0.9B: 0.5-1 token/sec (not recommended)
+  0.9B: 0.5-1 token/sec（不建議）
 ```
 
-### Accuracy (MMLU Benchmark)
+### Accuracy（MMLU Benchmark）
 
 ```
 Full E4B (3.98B):  62.30%
 Full E2B (1.91B):  50.90%
 ────────────────────────
-Custom 1.5B:       49-51%  (difference: -1.9%)
-Custom 1.3B:       48-50%  (difference: -2.9%)
-Custom 0.9B:       46-48%  (difference: -4.9%) ⭐
-Custom 0.7B:       44-46%  (difference: -6.9%)
-Custom 0.5B:       40-42%  (difference: -10.9%)
+Custom 1.5B:       49-51%  （差異：-1.9%）
+Custom 1.3B:       48-50%  （差異：-2.9%）
+Custom 0.9B:       46-48%  （差異：-4.9%）⭐
+Custom 0.7B:       44-46%  （差異：-6.9%）
+Custom 0.5B:       40-42%  （差異：-10.9%）
 ```
 
 ---
 
 ## 📱 Deployment Scenarios
 
-### Scenario 1: Mobile App (4GB RAM, NVIDIA GPU)
+### Scenario 1：Mobile App（4GB RAM、NVIDIA GPU）
 ```
 Recommended: 0.9B model
 - Quantization: 4-bit (NF4)
@@ -242,17 +242,17 @@ Recommended: 0.9B model
 - Quality: Good (46-48% MMLU)
 ```
 
-### Scenario 2: Web Browser (Client-side)
+### Scenario 2：Web Browser（Client-side）
 ```
 Recommended: 0.5B model
 - Quantization: 4-bit + WebGPU
 - Size: 800 MB - 1 GB
-- Inference: 100+ tokens/sec (modern GPU)
+- Inference: 100+ tokens/sec（modern GPU）
 - Memory: < 2 GB
 - Quality: Acceptable (40-42% MMLU)
 ```
 
-### Scenario 3: Edge Device (6GB RAM, prefer accuracy)
+### Scenario 3：Edge Device（6GB RAM、偏好準確度）
 ```
 Recommended: 1.3B model
 - Quantization: 4-bit
@@ -266,119 +266,119 @@ Recommended: 1.3B model
 
 ## 🔊 Audio Encoder Slicing
 
-### Current Status
-✅ **Feasible** but requires custom implementation
-- Text model slicing: Fully supported in MatFormer Lab
-- Audio encoder slicing: Needs extended implementation
+### 目前狀態
+✅ **可行**，但需要自訂實作
+- Text model slicing：MatFormer Lab 已完整支援
+- Audio encoder slicing：仍需擴充實作
 
-### Recommendation
-For 0.9B overall model:
+### 建議
+對整體 0.9B 模型而言：
 ```
-Text encoder:  0.85B (26 layers)
-Audio encoder: 0.10B (12 layers, reduced from 16)
+Text encoder:  0.85B（26 layers）
+Audio encoder: 0.10B（12 layers，由 16 layers 縮減）
 ────────────────────────
 Total:         0.95B
 ```
 
-Design and implementation approach provided in [RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md](./RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md) Part 2.
+完整設計與實作方式請見 [RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md](./RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md) Part 2。
 
 ---
 
-## 🛠️ Tools & Resources
+## 🛠️ 工具與資源
 
-### Provided Tools
+### 提供的工具
 - `custom_slicing_configs.py` - Python configuration generator
   ```bash
   python custom_slicing_configs.py
-  # Outputs all configurations and comparison tables
+  # 輸出所有 configurations 與 comparison tables
   ```
 
-### External References
-- MatFormer Lab: `[Gemma_3n]MatFormer_Lab.ipynb`
-- Official Slicing Configs: https://huggingface.co/datasets/google/gemma3n-slicing-configs
-- Gemma 3n Blog: https://developers.googleblog.com/en/introducing-gemma-3n-developer-guide
-- MatFormer Paper: https://arxiv.org/abs/2310.07707
+### 外部參考
+- MatFormer Lab：`[Gemma_3n]MatFormer_Lab.ipynb`
+- Official Slicing Configs：https://huggingface.co/datasets/google/gemma3n-slicing-configs
+- Gemma 3n Blog：https://developers.googleblog.com/en/introducing-gemma-3n-developer-guide
+- MatFormer Paper：https://arxiv.org/abs/2310.07707
 
 ---
 
 ## ❓ FAQ
 
-**Q: Can I really create a 0.9B model?**
-A: Yes! The 0.9B configuration is based on proven MatFormer methodology and is feasible with existing tools.
+**Q: 我真的能建立 0.9B 模型嗎？**  
+A: 可以。0.9B configuration 是基於已驗證的 MatFormer methodology，搭配現有工具即可實作。
 
-**Q: Will 0.9B work on my 4GB mobile phone?**
-A: Yes, with 4-bit quantization it becomes ~1.5GB, leaving 2.5GB for runtime.
+**Q: 0.9B 能在 4GB 手機上運作嗎？**  
+A: 可以，搭配 4-bit quantization 後約為 1.5GB，仍可保留約 2.5GB 給 runtime。
 
-**Q: What's the quality loss?**
-A: MMLU drops from 50.9% (E2B) to 46-48% (0.9B) - acceptable for many applications.
+**Q: 品質損失是多少？**  
+A: MMLU 會從 E2B 的 50.9% 降到 46-48%，對許多應用仍屬可接受。
 
-**Q: Can I fine-tune the sliced model?**
-A: Yes! Use LoRA to adapt to your specific domain/task.
+**Q: Slice 後的模型還能微調嗎？**  
+A: 可以。你仍可使用 LoRA 依照特定 domain / task 做適配。
 
-**Q: Is this officially supported by Google?**
-A: The MatFormer Lab and slicing technique are official. Custom sub-billion configs are community contributions based on the same methodology.
+**Q: 這是 Google 官方支援的嗎？**  
+A: MatFormer Lab 與 slicing technique 是官方的。自訂 sub-billion configs 則是社群建立，但基於相同 methodology。
 
-**Q: What about inference speed?**
-A: 0.9B is ~20-30% faster than E2B (1.91B) while maintaining reasonable quality.
+**Q: Inference speed 呢？**  
+A: 0.9B 大約比 E2B（1.91B）快 20-30%，同時仍保有合理品質。
 
-**Q: Can I use this for production?**
-A: Yes! Follow the deployment guide in QUICK_START_SUB_BILLION_MODELS.md.
+**Q: 可以用於 production 嗎？**  
+A: 可以。請依照 QUICK_START_SUB_BILLION_MODELS.md 中的部署指南操作。
 
-**Q: How do I handle audio encoder slicing?**
-A: Design provided in the main response. Requires extending the MatFormer Lab tensor slicing logic.
+**Q: Audio encoder slicing 要怎麼做？**  
+A: 主分析文件已提供設計，但需要擴充 MatFormer Lab 的 tensor slicing logic。
 
 ---
 
 ## 📞 Support & Questions
 
-### For questions about:
-- **Configuration selection** → Read FEATURE_REQUEST_RESPONSE_SUMMARY.md
-- **Implementation** → Follow QUICK_START_SUB_BILLION_MODELS.md
-- **Technical details** → See RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md
-- **Troubleshooting** → QUICK_START_SUB_BILLION_MODELS.md "Troubleshooting" section
-- **Custom configs** → Run `python custom_slicing_configs.py`
+若你的問題屬於：
+- **Configuration selection** → 閱讀 FEATURE_REQUEST_RESPONSE_SUMMARY.md
+- **Implementation** → 依照 QUICK_START_SUB_BILLION_MODELS.md
+- **Technical details** → 查看 RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md
+- **Troubleshooting** → 查看 QUICK_START_SUB_BILLION_MODELS.md 的 "Troubleshooting" 章節
+- **Custom configs** → 執行 `python custom_slicing_configs.py`
 
 ---
 
-## 📋 Checklist for Implementation
+## 📋 實作檢查清單
 
-- [ ] Read FEATURE_REQUEST_RESPONSE_SUMMARY.md
-- [ ] Choose configuration (recommended: 0.9B)
-- [ ] Set up Google Colab or local GPU environment
-- [ ] Open [Gemma_3n]MatFormer_Lab.ipynb
-- [ ] Input configuration values
-- [ ] Run slicing pipeline
-- [ ] Download or push to Hugging Face
-- [ ] Test inference on target device
-- [ ] Measure performance (speed, memory, accuracy)
-- [ ] Fine-tune on domain data (optional)
-- [ ] Deploy to production
+- [ ] 閱讀 FEATURE_REQUEST_RESPONSE_SUMMARY.md
+- [ ] 選擇 configuration（建議：0.9B）
+- [ ] 設定 Google Colab 或本機 GPU 環境
+- [ ] 開啟 [Gemma_3n]MatFormer_Lab.ipynb
+- [ ] 輸入 configuration values
+- [ ] 執行 slicing pipeline
+- [ ] 下載模型或推送到 Hugging Face
+- [ ] 在目標裝置上測試 inference
+- [ ] 量測效能（速度、記憶體、準確度）
+- [ ] 依領域資料進行微調（選用）
+- [ ] 部署到 production
 
 ---
 
-## 📈 Next Steps
+## 📈 下一步
 
-1. **Immediate**: Review FEATURE_REQUEST_RESPONSE_SUMMARY.md (5 min)
-2. **Short-term**: Implement 0.9B using QUICK_START guide (1-2 hours)
-3. **Testing**: Evaluate on target mobile device (30 min)
-4. **Optional**: Fine-tune with LoRA on your data (1-4 hours)
-5. **Deploy**: Push to production with 4-bit quantization
+1. **立即**：閱讀 FEATURE_REQUEST_RESPONSE_SUMMARY.md（5 分鐘）
+2. **短期**：依 QUICK_START 指南實作 0.9B（1-2 小時）
+3. **測試**：在目標 mobile device 上評估（30 分鐘）
+4. **選用**：使用 LoRA 在你的資料上微調（1-4 小時）
+5. **部署**：以 4-bit quantization 推到 production
 
 ---
 
 ## 🎉 Summary
 
-You now have:
-✅ **Proof of feasibility** for sub-billion models
-✅ **Optimal configuration** (0.9B recommended)
-✅ **Step-by-step guide** for implementation
-✅ **Performance predictions** for your deployment
-✅ **Multiple alternatives** for different scenarios
-✅ **Audio encoder approach** for future development
-✅ **Troubleshooting guide** for common issues
-✅ **Programmatic tools** for configuration management
+你現在已經具備：
+✅ **Sub-billion models 的可行性證據**
+✅ **最佳 configuration**（建議 0.9B）
+✅ **逐步實作指南**
+✅ **部署用效能預估**
+✅ **多種替代方案**
+✅ **未來可延伸的 audio encoder 方法**
+✅ **常見問題疑難排解指南**
+✅ **程式化 configuration 管理工具**
 
-**Next step**: Follow the QUICK_START guide to create your 0.9B model! 🚀
+**下一步**：依照 QUICK_START 指南建立你的 0.9B 模型。
 
 ---
 
@@ -386,19 +386,18 @@ You now have:
 
 ```
 gemma-cookbook/Guides/Gemma-3n-Submodels
-├── FEATURE_REQUEST_RESPONSE_SUMMARY.md          ← Start here (executive summary)
-├── RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md    ← Deep technical analysis
-├── QUICK_START_SUB_BILLION_MODELS.md            ← Implementation guide
-├── custom_slicing_configs.py                    ← Configuration tool (runnable)
-└── README.md (this file)                        ← Navigation & overview
+├── FEATURE_REQUEST_RESPONSE_SUMMARY.md          ← 從這裡開始（executive summary）
+├── RESPONSE_SUB_BILLION_AND_AUDIO_SLICING.md    ← 深度技術分析
+├── QUICK_START_SUB_BILLION_MODELS.md            ← 實作指南
+├── custom_slicing_configs.py                    ← Configuration tool（可執行）
+└── README.md（本檔）                            ← 導覽與總覽
 
 gemma-cookbook/Gemma/
-    └── [Gemma_3n]MatFormer_Lab.ipynb            ← Use this notebook to slice
+    └── [Gemma_3n]MatFormer_Lab.ipynb            ← 使用這個 notebook 進行 slicing
 ```
 
 ---
 
-**Last Updated**: November 14, 2025  
-**Status**: Complete ✅  
-**Recommendation**: Use 0.9B configuration for 4-6GB RAM mobile devices
-
+**Last Updated**：2025 年 11 月 14 日  
+**Status**：Complete ✅  
+**Recommendation**：對 4-6GB RAM mobile devices 使用 0.9B configuration
