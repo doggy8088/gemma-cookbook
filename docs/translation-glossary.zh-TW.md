@@ -26,6 +26,20 @@
 | agentic | agentic | keep English | Product/AI workflow adjective | 代理式 |
 | workflow | 工作流程 | translate | General docs language | 流程 |
 | notebook | notebook | keep English | Colab/Jupyter artifact | 筆記本 |
+| runtime | runtime | keep English | Colab / execution environment | 執行階段、運行時 |
+| token | token | keep English | Auth and model terminology | 令牌、權杖 |
+| secret | secret | keep English | Colab / secrets manager | 密鑰、秘密 |
+| cell | cell | keep English | Notebook structure | 單元格 |
+| output | 輸出 | translate | Generic docs wording | 產出 |
+| input | 輸入 | translate | Generic docs wording | 進入資料 |
+| setup | 設定 | translate | Tutorial section heading | 安裝設置 |
+| quickstart | 快速開始 | translate | Section heading | 快速入門 |
+| tutorial | 教學 | translate | Tutorial content | 教程 |
+| extension | extension | keep English | VS Code and browser extension | 擴充功能 |
+| library | library | keep English | Package/framework term | 程式庫 |
+| framework | framework | keep English | Package/framework term | 框架 |
+| dataset | dataset | keep English | ML data term | 資料集包 |
+| benchmark | 基準測試 | translate | Performance docs | 跑分 |
 | guide | 指南 | translate | Documentation section name | 指引 |
 | demo | 示範 | translate | Demo section name | 演示 |
 | workshop | 工作坊 | translate | Workshop section | 研討會 |
