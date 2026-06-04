@@ -1,15 +1,12 @@
 # TxGemma
 
-這個資料夾依照主題分成數個分類，每一類都聚焦於使用 TxGemma 模型的特定面向：
+該資料夾分為幾個類別，每個類別都專注於使用 TxGemma 模型的特定方面：
+* [推論與服務](#inference-and-serving)：如何為inference載入、執行和部署TxGemma模型
+* [微調](#fine-tuning)：如何針對特定任務與領域微調TxGemma模型
+* [代理](#agentic)：如何將TxGemma模型整合到agentic工作流程中
 
-* [推論與服務部署](#推論與服務部署)：如何載入、執行與部署 TxGemma 模型以進行推論
-* [微調](#微調)：如何針對特定任務與領域微調 TxGemma 模型
-* [Agentic](#agentic)：如何將 TxGemma 模型整合到 agentic 工作流程
-
-更多關於 TxGemma 的資訊，請參考 [HAI-DEF developer site](https://developers.devsite.corp.google.com/health-ai-developer-foundations/txgemma)。
-
+有關TxGemma的更多信息，請訪問[HAI-DEF 開發者網站](https://developers.devsite.corp.google.com/health-ai-developer-foundations/txgemma)。
 **引用**
-
 ```bibtex
 @article{wang2025txgemma,
     title={TxGemma: Efficient and Agentic LLMs for Therapeutics},
@@ -18,21 +15,14 @@
 }
 ```
 
-論文可見 [此處](https://arxiv.org/abs/2504.06196)。
+在[此處](https://arxiv.org/abs/2504.06196) 尋找論文。
+## 推論和服務
 
-## 推論與服務部署
-
-| Notebook Name | Description |
-| :------------------------------------------------------------------------------------------| --------------------------------------------------------------------------------------------------------------------------------- |
-| [[TxGemma]Quickstart_with_Hugging_Face.ipynb]([TxGemma]Quickstart_with_Hugging_Face.ipynb) | 使用 [Hugging Face](https://huggingface.co/) 載入並執行 TxGemma。 |
-| [[TxGemma]Quickstart_with_Model_Garden.ipynb]([TxGemma]Quickstart_with_Model_Garden.ipynb) | 使用 [Model Garden](https://console.cloud.google.com/vertex-ai/model-garden) 部署 TxGemma，並取得線上或批次預測。 |
-
+| notebook 名稱 | 描述 || :------------------------------------------------------------------------------------------| --------------------------------------------------------------------------------------------------------------------------------- |
+| [[TxGemma]Quickstart_with_Hugging_Face.ipynb]([TxGemma]Quickstart_with_Hugging_Face.ipynb) | 使用 [Hugging Face](https://huggingface.co/) 載入並執行 TxGemma。 || [[TxGemma]Quickstart_with_Model_Garden.ipynb]([TxGemma]Quickstart_with_Model_Garden.ipynb) | 使用 [Model Garden](https://console.cloud.google.com/vertex-ai/model-garden) 部署 TxGemma 並獲得線上或批次預測。 |
 ## 微調
-| Notebook Name | Description |
-| :--------------------------------------------------------------------------------------| ------------------------------------------------------------------------------------------------------------- |
-| [[TxGemma]Finetune_with_Hugging_Face.ipynb]([TxGemma]Finetune_with_Hugging_Face.ipynb) | 使用 Hugging Face libraries 在 [TrialBench](https://arxiv.org/abs/2407.00631) dataset 上微調 TxGemma。 |
-
-## Agentic
-| Notebook Name | Description |
-| :--------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| [[TxGemma]Agentic_Demo_with_Hugging_Face.ipynb]([TxGemma]Agentic_Demo_with_Hugging_Face.ipynb) | 使用 Agentic-Tx，這是一個聚焦治療領域的 LLM agent。 |
+| notebook 名稱 | 描述 || :--------------------------------------------------------------------------------------| ------------------------------------------------------------------------------------------------------------- |
+| [[TxGemma]Finetune_with_Hugging_Face.ipynb]([TxGemma]Finetune_with_Hugging_Face.ipynb) | 使用 Hugging Face 庫在 [TrialBench](https://arxiv.org/abs/2407.00631) dataset 上微調 TxGemma。 |
+## 代理商
+| notebook 名稱 | 描述 || :--------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| [[TxGemma]Agentic_Demo_with_Hugging_Face.ipynb]([TxGemma]Agentic_Demo_with_Hugging_Face.ipynb) | 使用 Agentic-Tx，一個專注於治療學的法學碩士agent。 |
