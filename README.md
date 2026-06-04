@@ -3,8 +3,18 @@
 
 > **免責聲明：** Gemma 是由 Google DeepMind 建立、面向開發者的模型家族。這份 cookbook 收錄的是 Google Gemma 的指南與範例。請留意，Gemma 屬於開放模型，在你依照本 cookbook 的範例進行開發時，仍可能出現 hallucination。
 
-## 開始使用 Gemma 模型
-Gemma 是一個輕量級、生成式人工智慧（AI）的開放模型家族，建立於與 Gemini 模型相同的研究與技術基礎之上。Gemma 模型家族包含：
+> **Disclaimer:** Gemma is a family of developer-focused models built by Google DeepMind. This cookbook is a collection of guides and examples for Google Gemma. Please keep in mind that Gemma is an open model and can hallucinate as you build on examples in this cookbook.
+
+## Repository Structure
+* [**Tutorials**](tutorials/): The latest tested notebooks for Gemma models and variants.
+* [**Apps**](apps/): Full-stack demos and complex end-to-end use cases.
+* [**Experiments**](experiments/): Research-focused model notebooks, including [TxGemma](experiments/TxGemma) and [MedGemma](experiments/MedGemma).
+* [**Responsible**](responsible/): Notebooks for responsible AI development.
+* [**Docs**](docs/): Core documentation, capabilities, and technical guides.
+* [**Archive**](.archive/): All older notebooks and historical examples.
+
+## Get started with the Gemma models
+Gemma is a family of lightweight, generative artificial intelligence (AI) open models, built from the same research and technology used to create the Gemini models. The Gemma model family includes:
 * Gemma\
   Gemma 模型家族的核心模型。
   * [Gemma](https://ai.google.dev/gemma/docs/core/model_card)\
@@ -49,18 +59,9 @@ Gemma 是一個輕量級、生成式人工智慧（AI）的開放模型家族，
 
 你可以在 Hugging Face Hub、Kaggle、Google Cloud Vertex AI Model Garden，以及 [ai.nvidia.com](https://ai.nvidia.com) 找到 Gemma 模型。
 
-## Notebook 目錄
-* [Gemma](Gemma/README.md)
-* [CodeGemma](CodeGemma/README.md)
-* [FunctionGemma](FunctionGemma/README.md)
-* [PaliGemma](PaliGemma/README.md)
-* [MedGemma](MedGemma/README.md)
-* [Google-Health 上的 MedGemma](https://github.com/Google-Health/medgemma/tree/main/notebooks) : Google-Health 另外提供使用 MedGemma 的 notebooks
-* [TxGemma](TxGemma/README.md)
-* [工作坊與技術演講](Workshops/README.md)
-* [Research](Research/)：聚焦研究模型的 notebooks
-* [複雜端到端使用案例展示](Demos/README.md)
-* [Google Cloud 上的 Gemma](https://github.com/GoogleCloudPlatform/generative-ai/tree/main/open-models) : GCP open models 另外提供使用 Gemma 的 notebooks
+## Additional Resources
+* [MedGemma on Google-Health](https://github.com/Google-Health/medgemma/tree/main/notebooks) : Google-Health has additional notebooks for using MedGemma
+* [Gemma on Google Cloud](https://github.com/GoogleCloudPlatform/generative-ai/tree/main/open-models) : GCP open models has additional notebooks for using Gemma
 
 ## 取得協助
 如果你有 Gemma Cookbook 相關問題，歡迎到 [developer forum](https://discuss.ai.google.dev/c/gemma/10) 提問，或在 GitHub 開啟 [issue](https://github.com/google-gemini/gemma-cookbook/issues)。
