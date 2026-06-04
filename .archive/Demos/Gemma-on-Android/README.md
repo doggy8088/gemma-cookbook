@@ -1,41 +1,38 @@
-#### 由 [Aashi Dutt](https://linkedin.com/in/aashi-dutt) 與 [Nitin Tiwari](https://linkedin.com/in/tiwari-nitin) 開發。
+#### 由 [Aashi Dutt](https://linkedin.com/in/aashi-dutt) 和 [Nitin Tiwari](https://linkedin.com/in/tiwari-nitin) 開發。
 
-# Gemma on Android
-這個專案示範如何在自訂資料集上微調 Gemma 2b-it 模型，並將微調後的模型部署到 Android。
+# Android 上的Gemma
+該專案是 fine-tuning Gemma 2b-it 模型在自訂 dataset 上的實現，並在 Android 上部署微調後的模型。
 
-
-## Pipeline:
+## 管道：
 
 ![Logo](assets/SciGemma_Pipeline.gif)
 
 
-## Demo Output:
+## 演示輸出：
 
 ![Logo](assets/SciGemma.gif)
 
 
 ## 執行步驟：
 
-1. 在本機複製這個 repository。
-2. 使用 Android Studio 開啟專案。
-3. 編輯 **Line 44** 的 `InferenceModel.kt` 檔案，將 `YOUR_MODE_NAME.bin` 替換為你的實際模型名稱。
-4. 建置專案。
-5. 將 Android app 安裝到手機上，開始使用 SciGemma。
+1. 將儲存庫克隆到本機上。
+2. 開啟 Android Studio 中的項目。
+3. 編輯 **第 44 行** 上的 ```InferenceModel.kt``` 文件，將 ```YOUR_MODE_NAME.bin``` 替換為模型的實際名稱。
+4. 建構項目。
+5. 在您的手機上安裝 Android 應用程式並享受使用 SciGemma 的樂趣。
 
 
 
 ## 資源：
 
-1. 可搭配閱讀以下三篇 blog series，深入了解程式碼細節：
+1. 按照三個 blog 系列詳細解釋程式碼：
+   
+第 1 部分：[逐步建立 dataset - 非結構化到結構化](https://aashi-dutt3.medium.com/part-1-step-by-step-dataset-creation-unstructured-to-structured-70abdc98abf0)
+第 2 部分：[微調 - Gemma 2b-it 模型](https://aashi-dutt3.medium.com/part-2-fine-tune-gemma-2b-it-model-a26246c530e7)
+第 3 部分：[在 Android 上部署 SciGemma](https://tiwarinitin1999.medium.com/part-3-deploy-gemma-on-android-5bac532c54b7)
+3. 🤗 上的微調模型：https://huggingface.co/NSTiwari/fine_tuned_science_gemma2b-it
 
-   Part 1: [Step-by-Step Dataset Creation- Unstructured to Structured](https://aashi-dutt3.medium.com/part-1-step-by-step-dataset-creation-unstructured-to-structured-70abdc98abf0)
+4. Try our model on HFSpaces: [https://huggingface.co/spaces/Aashi/NSTiwari-fine_tuned_science_gemma2b-it?logs=container](https://huggingface.co/spaces/Aashi/NSTiwari-fine_tuned_science_gemma2b-it)
 
-   Part 2: [Fine Tune - Gemma 2b-it model](https://aashi-dutt3.medium.com/part-2-fine-tune-gemma-2b-it-model-a26246c530e7)
+5. 在 YouTube 上查看演示影片：https://www.youtube.com/watch?v=T_HDsVHTrwg
 
-   Part 3: [Deploying SciGemma on Android](https://tiwarinitin1999.medium.com/part-3-deploy-gemma-on-android-5bac532c54b7)
-
-3. 在 🤗 上的微調模型：https://huggingface.co/NSTiwari/fine_tuned_science_gemma2b-it
-
-4. 在 HFSpaces 試用模型：[https://huggingface.co/spaces/Aashi/NSTiwari-fine_tuned_science_gemma2b-it?logs=container](https://huggingface.co/spaces/Aashi/NSTiwari-fine_tuned_science_gemma2b-it)
-
-5. 在 YouTube 觀看 demo 影片：https://www.youtube.com/watch?v=T_HDsVHTrwg
