@@ -1,35 +1,27 @@
-# Gemma 4 + HDP: Securing Agentic Function Calls
+# Gemma 4 + HDP：保護代理函數調用
 
-This example demonstrates how to integrate the **Human Delegation Provenance (HDP)** protocol with **Gemma 4's native function-calling** to cryptographically verify that every tool invocation was authorized by a human principal before execution.
+此範例示範如何將 **人工委託來源 (HDP)** 協定與 **Gemma 4 的本機函數呼叫** 集成，以加密方式驗證每個工具呼叫在執行前均經過人工委託人授權。
+## 問題
 
-## The problem
+Gemma 4 專為agentic 工作流程而建置。其原生函數呼叫使其能夠跨多步驟規劃自主調用工具和APIs——從雲端工作站到離線執行機器人的 Raspberry Pi。
+這就產生了一個差距：當 Gemma 4 生成函數呼叫時，沒有人類主體授權該特定操作的可驗證記錄。注入的prompt、受損的system prompt或來自另一個agent的橫向樞軸可以觸發與工具介面上的合法請求無法區分的函數呼叫。
 
-Gemma 4 is purpose-built for agentic workflows. Its native function-calling lets it autonomously call tools and APIs across multi-step plans — on anything from a cloud workstation to a Raspberry Pi running a robot offline.
-
-This creates a gap: when Gemma 4 generates a function call, there is no verifiable record that a human principal authorized that specific action. An injected prompt, a compromised system prompt, or a lateral pivot from another agent can trigger function calls that are indistinguishable from legitimate requests at the tool interface.
-
-HDP closes this gap.
-
+HDP 縮小了這一差距。
 ## What HDP does
 
-HDP (IETF draft: `draft-helixar-hdp-agentic-delegation-00`) provides:
-
-- **Ed25519-signed Delegation Tokens (HDTs)** issued by a human principal
-- **Scope constraints** — which tools the agent is permitted to call
+HDP（IETF 草案：`draft-helixar-hdp-agentic-delegation-00`）提供：
+- **Ed25519 簽署的委託代幣 (HDT)** 由人類委託人發行
+- **範圍限制** — 允許 agent 呼叫哪些工具
 - **Irreversibility classification** (Class 0–3) — from read-only to physical actuation
-- **Pre-execution verification** — the middleware gate runs *before* any tool executes
-- **Audit log** — a tamper-evident record of every authorization decision
+- **執行前驗證** - 中間件閘門在任何工具執行*之前*執行
+- **審核日誌** — 每個授權決策的防篡改記錄
 
-For Gemma 4 on **edge devices directing physical actuators** (Jetson Nano, Raspberry Pi + robot arm), the HDP-P companion specification adds embodiment constraints, policy attestation, and fleet delegation controls.
+對於指導實體執行器的**邊緣裝置（Jetson Nano、Raspberry Pi + 機器手臂）上的 Gemma 4，HDP-P 配套規範增加了實施例約束、策略證明和佇列委派控制。
+## 文件
 
-## Files
-
-| File | Description |
-|---|---|
-| `Gemma_4_HDP_Agentic_Security.ipynb` | Full walkthrough notebook — load Gemma 4, issue tokens, gate function calls |
-| `hdp_middleware.py` | Drop-in middleware — `HDPMiddleware.gate()` wraps any Gemma 4 tool executor |
-
-## Quick start
+| 文件 | 描述 ||---|---|
+| `Gemma_4_HDP_Agentic_Security.ipynb` | 完整演練notebook — 載入Gemma 4，發出tokens，閘函數調用 || `hdp_middleware.py` | 嵌入式中間件 — `HDPMiddleware.gate()` 包裝任何 Gemma 4 工具執行器 |
+## 快速啟動
 
 ```python
 from hdp_middleware import HDPDelegationToken, HDPMiddleware, IrreversibilityClass
@@ -58,18 +50,13 @@ if result.allowed:
     execute_tool(function_call)
 ```
 
-## Irreversibility classes
+## 不可逆性等級
 
-| Class | Definition | Authorization |
-|---|---|---|
-| 0 | Fully reversible — reads, queries | HDT sufficient |
-| 1 | Reversible with effort — writes, moves | HDT sufficient |
-| 2 | Irreversible — send, delete, publish | HDT + principal confirmation |
-| 3 | Irreversible + potentially harmful — physical actuation | Dual-principal required (HDP-P) |
+| 班級 | 定義 | 授權 ||---|---|---|
+| 0 | 完全可逆－讀取、查詢 | HDT 足夠 || 1 | 努力可逆－書寫、移動 | HDT 足夠 || 2 | 不可逆——發送、刪除、發布 | HDT+本金確認 || 3 | 不可逆+潛在有害－物理驅動 | 需要雙主體 (HDP-P) |
+## 參考
 
-## References
-
-- **IETF draft:** https://datatracker.ietf.org/doc/draft-helixar-hdp-agentic-delegation/
+- **IETF 草案：** https://datatracker.ietf.org/doc/draft-helixar-hdp-agentic-delegation/
 - **Zenodo DOI:** https://doi.org/10.5281/zenodo.19332023
-- **HDP-P (physical AI):** https://doi.org/10.5281/ZENODO.19332440
-- **Helixar:** https://helixar.ai
+- **HDP-P（實體人工智慧）：** https://doi.org/10.5281/ZENODO.19332440
+- **螺旋：** https://helixar.ai
