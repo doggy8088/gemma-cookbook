@@ -1,3 +1,3 @@
-# pipet-code-agent-2
+# 移液器代碼-agent-2
 
-這是 Pipet Code Agent 的更新版本，一個 Visual Studio Code extension，可與託管中的 Gemma 2 artificial intelligence 模型通訊，以處理程式碼生成與其他程式相關請求。
+Pipet Code Agent 的更新版本，Visual Studio Code extension，可與 Gemma 2 人工智慧模型的託管版本進行通信，以進行程式碼生成和程式碼相關請求。
