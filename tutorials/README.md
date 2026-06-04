@@ -1,31 +1,16 @@
-# Tutorials
+# 教學
 
-Notebooks for Gemma models and variants.
+適用於 Gemma 型號和變體的筆記型電腦。
 
-| Notebook Name | Description |
-|:--| --- |
-| [Agentic_RAG.ipynb](Agentic_RAG.ipynb) | Build an Agentic RAG system that intelligently decides when to call functions, uses a Qdrant based RAG pipeline, and falls back to Google Search. Trace and monitor with OPIK. |
-| [Image_Segmentation.ipynb](Image_Segmentation.ipynb) | Image Segmentation Task with Gemma 4 |
-| [RAG_with_EmbeddingGemma.ipynb](RAG_with_EmbeddingGemma.ipynb) | Build simple RAG with [EmbeddingGemma](https://ai.google.dev/gemma/docs/embeddinggemma) |
+| notebook 名稱 | 描述 ||:--| --- |
+| [代理_RAG.ipynb](Agentic_RAG.ipynb) | 建立一個 Agentic RAG 系統，聰明地決定何時呼叫函數，使用基於 Qdrant 的 RAG 管道，並回退到 Google 搜尋。使用 OPIK 進行追蹤和監控。 || [Image_Segmentation.ipynb](Image_Segmentation.ipynb) | Gemma 4 的影像分割任務 || [RAG_with_EmbeddingGemma.ipynb](RAG_with_EmbeddingGemma.ipynb) | 使用 [EmbeddingGemma](https://ai.google.dev/gemma/docs/embeddinggemma) 建立簡單的RAG |
+## 推論能力
 
-## Inference Capabilities
+探索 Gemma 跨不同模式的功能：
+| notebook 名稱 | 描述 ||:--| --- |
+| [內文 - 基本](../docs/capabilities/text/basic.ipynb) | 基本文本生成和 prompting Gemma 4. || [文字-函數呼叫](../docs/capabilities/text/function-calling-gemma4.ipynb) | 利用 Gemma 4 進行工具使用和函數呼叫。 || [視覺-圖像](../docs/capabilities/vision/image.ipynb) | 使用 Gemma 進行視覺理解和字幕 4. || [視覺-影片](../docs/capabilities/vision/video.ipynb) | Video understanding and analysis with Gemma 4. || [音訊](../docs/capabilities/audio.ipynb) | 探索音頻處理和理解。 || [思考](../docs/capabilities/thinking.ipynb) | 推論能力。 |
+## 微調
 
-Explore Gemma's capabilities across different modalities:
-
-| Notebook Name | Description |
-|:--| --- |
-| [Text - Basic](../docs/capabilities/text/basic.ipynb) | Basic text generation and prompting with Gemma 4. |
-| [Text - Function Calling](../docs/capabilities/text/function-calling-gemma4.ipynb) | Leverage Gemma 4 for tool use and function calling. |
-| [Vision - Image](../docs/capabilities/vision/image.ipynb) | Visual understanding and captioning with Gemma 4. |
-| [Vision - Video](../docs/capabilities/vision/video.ipynb) | Video understanding and analysis with Gemma 4. |
-| [Audio](../docs/capabilities/audio.ipynb) | Explore audio processing and understanding. |
-| [Thinking](../docs/capabilities/thinking.ipynb) | Reasoning capabilities. |
-
-## Fine-tuning
-
-Examples of fine-tuning Gemma models:
-
-| Notebook Name | Description |
-|:--| --- |
-| [Text Fine-tuning with QLoRA](../docs/core/huggingface_text_finetune_qlora.ipynb) | Efficiently fine-tune Gemma 4 for text tasks using QLoRA. |
-| [Vision Fine-tuning with QLoRA](../docs/core/huggingface_vision_finetune_qlora.ipynb) | Efficiently fine-tune Gemma 4 for vision tasks using QLoRA. |
+fine-tuning Gemma 型號範例：
+| notebook 名稱 | 描述 ||:--| --- |
+| [使用QLoRA進行文字微調](../docs/core/huggingface_text_finetune_qlora.ipynb) | 使用QLoRA 有效微調Gemma 4 的文字任務。 || [使用QLoRA進行視覺微調](../docs/core/huggingface_vision_finetune_qlora.ipynb) | 使用QLoRA 有效微調Gemma 4 的視覺任務。 |
