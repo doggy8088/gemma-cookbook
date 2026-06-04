@@ -1,37 +1,30 @@
 https://github.com/user-attachments/assets/00b78c38-597b-4a84-8a18-9c1644f94669
-
-Run **N concurrent Gemma 4 instances** on a local [`llama-server`](https://github.com/ggml-org/llama.cpp/tree/master/tools/server) and visualize them working in real time. 
-
-These Gemma 4 instances can be run across several scenarios, such as generating SVGs, translating text, generating code, and generating ASCII art.
-
-## Prerequisites
+在本地 [`llama-server`](https://github.com/ggml-org/llama.cpp/tree/master/tools/server) 上執行 **N 個並發 Gemma 4 個實例** 並可視化它們實時工作。
+這些 Gemma 4 實例可以在多種場景中執行，例如生成 SVG、翻譯文本、生成代碼和生成 ASCII 藝術作品。
+## 先決條件
 
 - **macOS** (uses AppleScript for Terminal window management)
 - **[uv](https://github.com/astral-sh/uv)** for package management
-- **llama-server** from [llama.cpp](https://github.com/ggml-org/llama.cpp) running on `localhost:8080`
+- **來自 [llama.cpp](https://github.com/ggml-org/llama.cpp) 的 llama-server** 在 `localhost:8080` 上執行
 
-## Quick Start
+## 快速入門
 
-**1. Install dependencies**
-
+**1.安裝依賴項**
 ```bash
 uv sync
 ```
 
-**2. Start llama-server**
-
-If you have `llama.cpp` installed and a local [Gemma 4 GGUF](https://huggingface.co/unsloth/gemma-4-26B-A4B-it-GGUF), you can start `llama-server` with:
-
+**2.啟動 llama-server**
+如果您安裝了 `llama.cpp` 和本地 [Gemma 4 GGUF](https://huggingface.co/unsloth/gemma-4-26B-A4B-it-GGUF)，您可以使用以下命令啟動 `llama-server`：
 ```bash
 llama-server -m gemma-4-26B-A4B-it-UD-Q4_K_M.gguf -c 70000 -np 10 --metrics --reasoning off
 ```
 
-> [!TIP]
-> Set `-np` to the number of concurrent Gemma 4 instances + 1 (for the orchestrator).
-> Each instance gets its own slot. Context per slot = `-c` / `-np`.
+> [！提示]
+> 將 `-np` 設定為並發 Gemma 4 個實例的數量 + 1（對於協調器）。
+> 每個實例都有自己的插槽。每個槽的上下文 = `-c` / `-np`。
 
-**3. Run a demo**
-
+**3.執行演示**
 ```bash
 # Generate SVGs
 bash run.sh --scenario svg --topic "Technology and AI" --tasks 10
@@ -46,12 +39,10 @@ bash run.sh --scenario code --topic "FizzBuzz" --tasks 10
 bash run.sh --scenario ascii --topic "animals" --tasks 10
 ```
 
-This opens macOS Terminal windows in a grid: a dashboard on top, the orchestrator, and N Gemma 4 instances below.
+這將在網格中開啟 macOS 終端機視窗：頂部是儀表板、編排器和下面的 N Gemma 4 個實例。
+## 新增場景
 
-## Adding a New Scenario
-
-Edit `demo/scenarios.py`:
-
+編輯`demo/scenarios.py`：
 ```python
 def make_my_agents(n: int = 10) -> list[dict]:
     return [
@@ -84,8 +75,7 @@ SCENARIOS["my_scenario"] = {
 }
 ```
 
-Then run:
-
+然後執行：
 ```bash
 bash run.sh --scenario my_scenario --topic "My Topic"
 ```
