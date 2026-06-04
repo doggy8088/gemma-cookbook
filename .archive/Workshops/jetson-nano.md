@@ -1,81 +1,66 @@
-# 在 NVIDIA Jetson Orin Nano 上執行 Gemma
+# 在 NVIDIA Jetson Orin Nano 上執行Gemma
 
-NVIDIA Jetson Orin Nano developer kit 是一台小巧但性能強大的電腦，
-能夠執行開放模型，因此非常適合用來體驗 on-device inference。
-
-不過，若要取得最佳效能，建議先將它更新到
-最新版的 NVIDIA JetPack stack。
-
+NVIDIA Jetson Orin Nano 開發套件是一款小巧但功能強大的計算機
+能夠執行開放模型，使其成為一種很好的實驗方式
+設備上inference。
+但是，為了獲得最佳性能，應將其更新為
+最新版本的 NVIDIA JetPack 堆疊。
 ## 為什麼要更新？
 
-tl;dr：效能會高很多。
-
-Jetson Orin Nano kit 出廠時通常已預先燒錄較舊版本的
-NVIDIA JetPack。
-
-在 2024 年 12 月，NVIDIA 發布了 JetPack 6.2 更新，
-為 Jetson Orin Nano 新增了新的電源模式，可解鎖顯著更高的效能，
+tl,dr：以獲得更高的效能。
+Jetson Orin Nano 套件通常在工廠預先安裝較舊的套件
+NVIDIA JetPack 版本。
+2024年12月，NVIDIA 發表 JetPack 6.2更新，增添新動力
+Jetson Orin Nano 的模式可以解鎖更高等級的效能，
 如下表所示。
 
-
-Jetson Orin Nano 8GB 的 benchmark 效能（tokens/sec）：
-| Model | Orin Nano 8GB（原始） | Orin Nano 8GB（Super Mode） | Perf Gain (x)|
-|:------|:-------------------------|:---------------------------|:-------------|
-|Gemma 2 2B|21.5|35.0|1.63|
-|Gemma 2 9B|7.20|9.20|1.28|
-|PaliGemma2 3B|13.7|21.6|1.58|
-
-更多資訊請參考：
+Jetson Orin Nano 8GB 上tokens/秒的基準：| 模型 | 奧林 Nano 8GB（原廠） | Orin Nano 8GB（超級模式） | 性能增益 (x) ||:------|:-------------------------|:---------------------------|:-------------|
+| Gemma 2 2B | 21.5 | 35.0 | 1.63 || Gemma 2 9B | 7.20 | 9.20 | 1.28 || PaliGemma2 3B | 13.7 | 21.6 | 1.58 |
+有關更多信息，請參閱
 https://developer.nvidia.com/blog/nvidia-jetpack-6-2-brings-super-mode-to-nvidia-jetson-orin-nano-and-jetson-orin-nx-modules/
+## 更新您的開發套件
 
-## 更新你的 dev kit
-
-NVIDIA 已為這個流程準備了完整指南，可在這裡找到：
-
+NVIDIA 已為此過程準備了完整指南，您可以在此處找到。
 https://www.jetson-ai-lab.com/initial_setup_jon.html
+請注意，您需要一張至少 64GB 容量的 microSD 卡和一台計算機
+with a microSD reader.
 
-請注意，你需要至少 64GB 容量的 microSD 卡，以及一台具備 microSD reader 的電腦。
+## 在您的開發套件上執行 Gemma
 
-## 在你的 dev kit 上執行 Gemma
-
-### 快速開始
-你在 dev kit 上與 Gemma 的大部分互動，都會透過 terminal 與 cURL、wget 等工具進行。
-
-建議在開始之前，先在 dev kit 上安裝 cURL。
-
-注意：Jetson Orin Nano 預設的 username 與 password 是
+### 入門
+您與開發套件上的 Gemma 的大部分互動都將使用
+終端，使用 cURL 和 wget 等工具。
+在執行其他操作之前，請先在開發套件上安裝 cURL。
+注意：Jetson Orin Nano 的預設使用者名稱和密碼是
 `nvidia` / `nvidia`
+1. 開啟終端應用程式
 
-1. 開啟 Terminal app
+    Shortcut : Ctrl + Alt + T
 
-    快捷鍵：Ctrl + Alt + T
-
-2. 安裝 curl
+2. 安裝捲曲
 
     $ sudo apt install curl
 
 ### Ollama
 
-Ollama 提供一種簡化、友善的方式，可在本機執行與管理大型語言模型。
-
-它簡化了 setup、model management 與互動流程，重點在於易用性與可擴充性，讓更多人都能使用 LLM。
-
-以下是使用 Ollama 與 Gemma 3 在 Jetson Orin Nano 上執行的快速指南。
-
-先安裝 Ollama：
-
+Ollama 提供了一種簡化且用戶友好的方式來執行和管理大型
+本地語言模式。
+它簡化了設定、模型管理和交互，重點是
+易用性和可擴展性，使法學碩士可供更廣泛的使用者使用。
+以下是在 Jetson Orin 上執行 Ollama 和 Gemma 3 的快速指南
+奈米。
+首先，安裝Ollama：
     $ curl -fsSL https://ollama.com/install.sh | sh
 
 
-這會安裝 Ollama，並將其加入 system path，命令名稱為 `ollama`。
-
-接著，試著用 Gemma 3 執行一段文字推論（Ollama 第一次使用時會抓取並快取模型）。
-
+這將安裝 Ollama 並使其在您的系統路徑中以 `ollama` 的形式存取。
+接下來，使用 Gemma 3 嘗試 Ollama 和一些文本 inference（Ollama 將獲取
+並在第一次使用時緩存模型）。
     $ ollama run gemma3:1b “Write me a poem about the Kraken.”
 
 # 更多資訊
 
-若想看示範影片，請參考 [Demo: Gemma 2 2B on a Jetson Orin Nano
+有關可能性的視訊演示，請參閱 [演示：Gemma 2 2B 在 Jetson Orin Nano 上
 ](https://www.youtube.com/watch?v=Kd7VJ-TKb8I&list=PLOU2XLYxmsIKOyXflnuPK-qe32hZLc2HB&index=12)。
-
-更多關於使用 Ollama 的資訊，請參考 ai.google.dev 上的 [Ollama documentation](https://ai.google.dev/gemma/docs/integrations/ollama)。
+有關使用 Ollama 的更多信息，請參閱 [Ollama 文件](https://ai.google.dev/gemma/docs/integrations/ollama)
+在 ai.google.dev 上。
