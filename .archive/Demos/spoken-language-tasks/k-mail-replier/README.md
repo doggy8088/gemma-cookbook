@@ -1,82 +1,87 @@
-# Spoken Language Tasks Assistant with Gemma
+# 口說任務助理Gemma
 
-這份教學會帶你完成以 Gemma 與 Python 建立的 spoken language task 應用程式的設定、執行與延伸。這個應用程式提供一個基本的 web 使用者介面，你可以依需求修改。它目前是為一家虛構的韓國烘焙坊產生客戶 email 回覆，且所有語言輸入與輸出都完全以韓文處理。你可以將這個應用模式套用到任何語言，以及任何以文字輸入與文字輸出為主的商務任務。
+本教學將引導您完成設定、執行和擴展語音
+使用Gemma 和Python 建立的語言任務應用程式。該應用程式提供
+您可以修改以滿足您的需求的基本 Web 使用者介面。應用
+旨在為一家虛構的韓國麵包店生成對客戶電子郵件的回复，
+所有語言輸入和輸出完全用韓語處理。您可以使用
+此應用程式模式適用於任何語言和任何使用文字的業務任務
+輸入和文字輸出。
+## 項目設定
 
-## 專案設定
-
-以下說明會帶你完成本專案的開發與測試設定。整體步驟包括安裝必要軟體、從程式碼 repository 複製專案、設定幾個環境變數，以及執行安裝設定流程。
-
+這些說明將引導您完成此項目的設置
+開發和測試。一般步驟是安裝一些先決條件
+軟體，從程式碼儲存庫複製項目，設定一些環境
+變數，並執行設定安裝。
 ### 安裝先決條件
 
-這個專案使用 Python 3 與 Python Poetry 來管理套件並執行應用程式。以下安裝說明以 Linux host machine 為例。
-
-若要安裝必要軟體：
-
-* 安裝 Python 3 與 Python 的 `venv` virtual environment package。
+本專案使用Python 3和Python Poetry 來管理套件和
+執行應用程式。以下安裝說明適用於 Linux
+主機。
+要安裝所需的軟體：
+*  安裝Python 3 和Python 的`venv` 虛擬環境包。
 <pre>
-sudo apt update
-sudo apt install git pip python3-venv
-</pre>
+須藤 apt 更新
+sudo apt install git pip python3-venv</pre>
 
-### 複製並設定專案
+### 克隆並設定項目
 
-下載專案程式碼，並使用 Poetry 安裝命令抓取所需 dependencies 並完成設定。你需要 [git](https://git-scm.com/) source control 軟體來取得專案原始碼。
-
-下載專案程式碼的步驟如下：
-
-1. 使用下列命令複製 git repository。
+下載專案代碼，使用 Poetry 安裝指令下載
+所需的依賴項並設定項目。你需要
+[git](https://git-scm.com/) 原始碼控制軟體來檢索
+專案原始碼。
+下載專案代碼：
+1.  使用以下命令克隆 git 儲存庫。
 <pre>
-git clone https://github.com/google-gemini/gemma-cookbook.git
-</pre>
-1. 你也可以選擇設定本機 git repository 使用 sparse checkout，如此只會取回本專案所需檔案。
+git 克隆https://github.com/google-gemini/gemma-cookbook.git</pre>
+1.  （可選）設定本機 git 儲存庫以使用稀疏結帳，
+    so you have only the files for the project.
 <pre>
 cd gemma-cookbook/
-git sparse-checkout set Gemma/spoken-language-tasks/
-git sparse-checkout init --cone
-</pre>
+git 稀疏結帳設定Gemma/spoken-language-tasks/
+git 稀疏結帳初始化--cone</pre>
 
-安裝 Python libraries 的步驟如下：
-
-1. 為此專案設定並啟用 Python virtual environment（venv）：
+要安裝 Python 庫：
+1.  為此項目設定並啟動 Python 虛擬環境 (venv)：
 <pre>
 python3 -m venv venv
-source venv/bin/activate
-</pre>
-1. 使用 {{setup_python}} script 安裝本專案所需的 Python libraries。
+源 venv/bin/activate</pre>
+1.  使用 {{setup_python}} 腳本安裝此項目所需的Python 庫。
 <pre>
-./setup_python.sh
-</pre>
+./setup_python.sh</pre>
 
 ### 設定環境變數
 
-設定幾個本程式碼專案執行所需的環境變數，包括 Kaggle user name 與 Kaggle token key。你必須擁有 Kaggle 帳號，並申請 Gemma 模型的存取權限。
-
-你需要將 Kaggle Username 與 Kaggle Token Key 寫入兩個 `.env` 檔案，分別供 web application 與 tuning program 讀取。
-
-注意：請將 Kaggle Token Key 視同密碼妥善保護。不要把金鑰寫進公開發佈的程式碼中。
-
-設定環境變數的步驟如下：
-
-1. 依照 [Kaggle documentation](https://www.kaggle.com/docs/api#authentication) 取得你的 Kaggle username 與 token key
-1. 依照 [Gemma Setup](/gemma/docs/setup#get-access) 頁面中的 *Get access to Gemma* 指示，取得 Gemma 模型存取權限。
-1. 在你複製下來的專案中，於下列 *每一個* 位置建立 `.env` 文字檔：
+設定允許此程式碼所需的一些環境變數
+要執行的項目，包括 Kaggle 用戶名和 Kaggle token 金鑰。
+您必須擁有Kaggle 帳戶並要求存取Gemma 模型。
+您將 Kaggle 使用者名稱和 Kaggle token 金鑰新增至兩個 `.env` 檔案中，
+分別由 Web 應用程式和調整程式讀取。
+注意：將您的 Kaggle token 金鑰視為密碼並對其進行適當保護。
+不要將您的密鑰嵌入公開發布的程式碼中。
+設定環境變數：
+1.  按照說明取得您的 Kaggle 使用者名稱和 token 金鑰
+    in the [Kaggle documentation](https://www.kaggle.com/docs/api#authentication)
+1.  依照*取得Gemma*的存取權限來存取Gemma模型
+    instructions in the [Gemma Setup](/gemma/docs/setup#get-access) page.
+1.  為專案建立環境變數文件，透過建立
+    `.env` text file at *each* these location in your clone of the project:
 <pre>
 k-mail-replier/k_mail_replier/.env
-k-gemma-it/.env
-</pre>
-1. 建立 `.env` 文字檔後，將以下設定加入 **兩個** 檔案中：
+k-gemma-it/.env</pre>
+1.  建立 `.env` 文字檔案後，將以下設定新增至 **兩個** 檔案：
 <pre>
 KAGGLE_USERNAME=&lt;YOUR_KAGGLE_USERNAME_HERE&gt;
 KAGGLE_KEY=&lt;YOUR_KAGGLE_KEY_HERE&gt;
 </pre>
 
-### 執行與測試應用程式
+### 執行並測試應用程式
 
-1. 在 terminal 視窗中，切換到 `spoken-language-tasks/k-mail-replier/k_mail_replier/` 目錄。
+1.  在終端機視窗中，導覽至`spoken-language-tasks/k-mail-replier/k_mail_replier/`
+    directory.
 <pre>
-cd spoken-language-tasks/k-mail-replier/
+cd 口說任務/k-mail-replier/
 </pre>
-1. 使用 `run_flask_app.sh` script 執行應用程式：
+1.  Run the application using the `run_flask_app.sh` script:
 <pre>
-./run_flask_app.sh
-</pre>
+./run_flask_app.sh</pre>
