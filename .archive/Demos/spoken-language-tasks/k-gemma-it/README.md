@@ -1,3 +1,3 @@
-# K-Mail replier model tuner
+# K-Mail 崩潰模型調諧器
 
-這個專案可讓你產生 Gemma 模型的 tuned 版本，並進行測試。
+此專案可讓您產生 Gemma 模型的調整版本並進行測試。
