@@ -1,21 +1,21 @@
-#### 由 [Nitin Tiwari](https://linkedin.com/in/tiwari-nitin)、[Sagar Malhotra](https://linkedin.com/in/sagar0-0malhotra) 與 [Savio Rodrigues](https://x.com/sloathee) 開發。
+#### 由 [Nitin Tiwari](https://linkedin.com/in/tiwari-nitin)、[Sagar Malhotra](https://linkedin.com/in/sagar0-0malhotra) 和 [Savio Rodrigues](https://x.com/sloathee) 開發。
 
-# PaliGemma Android HF
-這個 repository 示範如何在 Android 上，透過 Hugging Face-Gradio Client API 對 PaliGemma 視覺語言模型執行推論，用於 zero-shot object detection、image captioning 與 visual question-answering 等任務。
+# PaliGemma 安卓高頻
+該儲存庫是在 Android 上使用 Hugging Face-Gradio 用戶端 API 推斷 PaliGemma 視覺語言模型的實現，用於零樣本目標檢測、圖像字幕和視覺問答等任務。
 
-
-## Pipeline:
+## 管道：
 
 ![Logo](assets/paligemma_android_hf_pipeline.png)
 
 
-## Demo Outputs:
+## 演示輸出：
 
-**Visual question-answering、zero-shot object detection、image captioning**
-
+**視覺問答、零樣本目標偵測、影像字幕**
 ![Logo](assets/paligemma-android-hf1.gif)
 
 
-**Reference Expression Segmentation**
-
+**參考表達分割**
 ![Logo](assets/paligemma-android-segmentation.gif)
+
+
+
