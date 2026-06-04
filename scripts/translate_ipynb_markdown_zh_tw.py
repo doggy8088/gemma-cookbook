@@ -346,6 +346,15 @@ def translate_markdown_source(text: str) -> str:
     return "".join(out)
 
 
+def translate_markdown_file(path: pathlib.Path) -> bool:
+    source = path.read_text(encoding="utf-8")
+    translated = translate_markdown_source(source)
+    if translated != source:
+        path.write_text(translated, encoding="utf-8")
+        return True
+    return False
+
+
 def translate_notebook(path: pathlib.Path) -> bool:
     data = json.loads(path.read_text(encoding="utf-8"))
     changed = False
@@ -363,14 +372,22 @@ def translate_notebook(path: pathlib.Path) -> bool:
 
 
 def main() -> int:
-    targets = [pathlib.Path(arg) for arg in sys.argv[1:]] or list(ROOT.rglob("*.ipynb"))
+    targets = [pathlib.Path(arg) for arg in sys.argv[1:]] or (
+        list(ROOT.rglob("*.ipynb")) + list(ROOT.rglob("*.md"))
+    )
     changed_count = 0
     for rel in targets:
         path = rel if rel.is_absolute() else ROOT / rel
         if not path.exists():
             print(f"missing\t{rel}")
             continue
-        changed = translate_notebook(path)
+        if path.suffix == ".ipynb":
+            changed = translate_notebook(path)
+        elif path.suffix == ".md":
+            changed = translate_markdown_file(path)
+        else:
+            print(f"unsupported\t{rel}")
+            continue
         print(f"{'changed' if changed else 'skipped'}\t{path.relative_to(ROOT)}")
         if changed:
             changed_count += 1
@@ -380,3 +397,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
