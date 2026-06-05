@@ -4,54 +4,56 @@
 > **免責聲明：** Gemma 是由 Google DeepMind 建構的一系列以開發人員為中心的模型。這本食譜是 Google Gemma 的指南和範例的集合。請記住，Gemma 是一個開放模型，當您基於本食譜中的範例進行構建時，可能會產生幻覺。
 
 ## 儲存庫結構
-* [**教學**](tutorials/)：Gemma 型號和變體的最新測試notebook。
+* [**教學**](tutorials/)：Gemma 模型和變體的最新測試 notebook。
 * [**應用**](apps/)：全端演示和複雜的端對端用例。
-* [**實驗**](experiments/)：以研究為重點的模型notebooks，包括[TxGemma](experiments/TxGemma)和[MedGemma](experiments/MedGemma)。
-* [**Responsible**](responsible/)：用於負責任的人工智慧開發的 notebook。
+* [**實驗**](experiments/)：以研究為主的模型 notebooks，包括 [TxGemma](experiments/TxGemma) 和 [MedGemma](experiments/MedGemma)。
+* [**負責任的 AI**](responsible/)：用於負責任人工智慧開發的 notebook。
 * [**文件**](docs/)：核心文件、功能與技術指南。
 * [**檔案**](.archive/)：所有較舊的notebook和歷史範例。
 
 ## 開始使用 Gemma 模型
-Gemma 是一系列輕量級生成人工智慧 (AI) 開放模型，採用與創建 Gemini 模型相同的研究和技術構建。 Gemma 型號系列包括：* Gemma\
-Gemma 系列的核心型號。  * [Gemma](https://ai.google.dev/gemma/docs/core/model_card)\
-    For a variety of text generation tasks and can be further tuned for specific use cases
+Gemma 是一系列輕量級生成式人工智慧 (AI) 開放模型，採用與建立 Gemini 模型相同的研究和技術構建。Gemma 模型家族包括：
+* Gemma\
+  Gemma 家族的核心模型。
+  * [Gemma](https://ai.google.dev/gemma/docs/core/model_card)\
+    適用於各種文字生成任務，並可針對特定使用場景進行進一步微調
   * [Gemma 2](https://ai.google.dev/gemma/docs/core/model_card_2)\
-    Higher-performing and more efficient, available in 2B, 9B, 27B parameter sizes
+    效能更高、效率更佳，提供 2B、9B、27B 參數大小
   * [Gemma 3](https://ai.google.dev/gemma/docs/core/model_card_3)\
-    Longer context window and handling text and image input, available in 1B, 4B, 12B, and 27B parameter sizes
+    更長的 context window，且支援文字與影像輸入，提供 1B、4B、12B 與 27B 參數大小
   * [Gemma 3n](https://ai.google.dev/gemma/docs/gemma-3n/model_card) \
-    Designed for efficient execution on low-resource devices. Handling text, image, video, and audio input, available in E2B and E4B parameter sizes
+    專為低資源裝置上的高效執行而設計。支援文字、影像、影片和音訊輸入，提供 E2B 與 E4B 參數大小
   * [Gemma 4](https://ai.google.dev/gemma/docs/core/model_card_4)\
-    Well-suited for reasoning, agentic workflows, coding, and multimodal understanding, available in E2B, E4B, 26B A4B, and 31B parameter sizes.
+    非常適合推理、agentic 工作流、程式碼撰寫和多模態理解，提供 E2B、E4B、26B A4B 與 31B 參數大小。
 * Gemma 變體
   * [CodeGemma](https://ai.google.dev/gemma/docs/codegemma)\
-    Fine-tuned for a variety of coding tasks
-  * [數據Gemma](https://ai.google.dev/gemma/docs/datagemma)\
-    Fine-tuned for using Data Commons to address AI hallucinations
+    專為各種程式碼撰寫任務進行微調
+  * [DataGemma](https://ai.google.dev/gemma/docs/datagemma)\
+    專為使用 Data Commons 來解決 AI 幻覺問題進行微調
   * [FunctionGemma](https://ai.google.dev/gemma/docs/functiongemma)\
-    Fine-tuned on Gemma 3 270M IT checkpoint for function calling
+    在 Gemma 3 270M IT checkpoint 上進行微調，適用於 function calling
   * [MedGemma](https://developers.google.com/health-ai-developer-foundations/medgemma)
-    The MedGemma collection contains Google's most capable open models for medical text and image comprehension, built on Gemma 3. Developers can use MedGemma to accelerate building healthcare-based AI applications. MedGemma comes in two variants: a 4B multimodal version and a 27B text-only version.
+    MedGemma 系列包含 Google 最頂尖的醫療文字與影像理解開放模型，基於 Gemma 3 構建。開發者可以使用 MedGemma 來加速構建醫療領域的 AI 應用。MedGemma 提供兩種版本：4B 多模態版本與 27B 僅限文字版本。
   * [PaliGemma](https://ai.google.dev/gemma/docs/paligemma/model-card)\
-    Vision Language Model\
-    For a deeper analysis of images and provide useful insights
+    視覺語言模型 (VLM)\
+    用於對影像進行更深層的分析並提供實用的洞察
   * [PaliGemma 2](https://ai.google.dev/gemma/docs/paligemma/model-card-2)\
-    VLM which incorporates the capabilities of the Gemma 2 models
-  * [經常Gemma](https://ai.google.dev/gemma/docs/recurrentgemma)\
-    Based on [Griffin](https://arxiv.org/abs/2402.19427) architecture\
-    For a variety of text generation tasks
-  * [屏蔽Gemma](https://ai.google.dev/gemma/docs/shieldgemma/model_card)\
-    Fine-tuned for evaluating the safety of text prompt input and text output responses against a set of defined safety policies
-  * [屏蔽Gemma 2](https://ai.google.dev/gemma/docs/shieldgemma/model_card_2)\
-    Fine-tuned on Gemma 3 4B IT checkpoint for image safety classification
+    結合了 Gemma 2 模型功能的視覺語言模型 (VLM)
+  * [RecurrentGemma](https://ai.google.dev/gemma/docs/recurrentgemma)\
+    基於 [Griffin](https://arxiv.org/abs/2402.19427) 架構\
+    適用於各種文字生成任務
+  * [ShieldGemma](https://ai.google.dev/gemma/docs/shieldgemma/model_card)\
+    專為評估文字 prompt 輸入與文字輸出回應是否符合一組定義的安全政策而進行微調
+  * [ShieldGemma 2](https://ai.google.dev/gemma/docs/shieldgemma/model_card_2)\
+    在 Gemma 3 4B IT checkpoint 上進行微調，適用於影像安全分類
   * [T5Gemma](https://deepmind.google/models/gemma/t5gemma)\
-    A collection of encoder-decoder models that provide a strong quality-inference efficiency tradeoff
-  * [翻譯Gemma](https://huggingface.co/collections/google/translategemma)\
-    A collection of open model designed to handle translation tasks across 55 languages
+    一系列編碼器-解碼器模型，在品質與推論效率之間取得了絕佳的權衡
+  * [TranslateGemma](https://huggingface.co/collections/google/translategemma)\
+    一系列專為處理 55 種語言之間的翻譯任務而設計的開放模型
   * [TxGemma](https://deepmind.google/models/gemma/txgemma)\
-    A collection of open models designed to improve the efficiency of therapeutic development
-  * [金庫Gemma](https://deepmind.google/models/gemma/vaultgemma)\
-    An open model trained from the ground up using differential privacy to prevent memorization and leaking of training data examples
+    一系列專為提高療效開發效率而設計的開放模型
+  * [VaultGemma](https://deepmind.google/models/gemma/vaultgemma)\
+    一個從頭開始使用差異隱私（differential privacy）進行訓練的開放模型，以防止記憶和洩漏訓練資料範例
 
 您可以在 Hugging Face Hub、Kaggle、Google Cloud Vertex AI Model Garden 和 [ai.nvidia.com](https://ai.nvidia.com) 上找到 Gemma 型號。
 ## 其他資源
@@ -66,6 +68,6 @@ Gemma 系列的核心型號。  * [Gemma](https://ai.google.dev/gemma/docs/core/
 ## 貢獻
 隨時歡迎您的貢獻。請在實施前閱讀[貢獻](https://github.com/google-gemini/gemma-cookbook/blob/main/CONTRIBUTING.md)。
 感謝您與Gemma一起開發！我們很高興看到您的創造。
-## 該存儲庫的翻譯
+## 本儲存庫翻譯版本
 * [繁體中文](https://github.com/doggy8088/gemma-cookbook)
-* [Simplified Chinese](https://github.com/xiaoxiong1006/gemma-cookbook)
+* [簡體中文](https://github.com/xiaoxiong1006/gemma-cookbook)
